@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />	
+		<meta name="keywords" content="健康吧云管理平台" />
+		<meta name="description" content="健康吧,创享智慧健康生活" />
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/emng-1.0.0.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/public.css"/>
+		
+		<!--theme-->
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}#springTheme('emng')"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}#springTheme('public')"/>
+		<title>新增医生</title>
+		<style type="text/css">
+			nav em{background-position: -240px 0;}
+		    #hospital,#title,#hospital select,#title select{width: 690px;}
+		    .org,.org select,.emng-select .emng-curselect{width: 345px;}
+			@media (min-width: 1000px) and (max-width: 1499px){
+				#hospital,#title,#hospital select,#title select{width: 789px;}
+			    .org,.org select,.emng-select .emng-curselect{width: 394px;}
+            }
+            @media (min-width: 1500px) and (max-width:1600px){
+	            #hospital,#title,#hospital select,#title select{width: 989px;}
+			    .org,.org select,.emng-select .emng-curselect{width: 494px;}
+            }
+            @media (min-width: 1620px) and (max-width:1800px){
+	           #hospital,#title,#hospital select,#title select{width: 1289px;}
+			   .org,.org select,.emng-select .emng-curselect{width: 644px;}
+            }
+		</style>
+	</head>
+	<body>
+		<nav class="emng-flex">
+			<em></em>
+			<p>医生管理 -> 医生信息<span> -> 新建医生</span></p>
+		</nav>
+		<div class="btn-area emng-flex">
+			<a href="${link.contextPath}/doctorDetail.htm" class="emng-btn btn-bg-blue" id="go-back">返回</a>
+			<button class="emng-btn btn-bg-blue" id="go-submit" type="button">提交</button>
+		</div>
+		<div class="tab">
+			<form action="${link.contextPath}/doctorAdd.htm" method="post" name="doctorAddForm" id="doctorAddForm">
+				<ul>
+					<li>
+						<span><i class="must">*</i>手机号码:</span>
+						<input type="text" id="pNum" name="pNum" maxlength="11" value="$!{doctorAddForm.pNum}" />
+					    <label class="error"></label>
+					</li>
+					<li>
+						<span><i class="must">*</i>姓名:</span>
+						<input type="text" id="uname" name="uname" maxlength="32"  value="$!{doctorAddForm.uname}" placeholder="32个字之内 请勿输入空格等特殊字符"/>
+					    <label class="error"></label>
+					</li>
+					<li>
+						<span><i class="must">*</i>省市:</span>
+						<input type="hidden" name="locId" id="LocId"  value="#if($!{doctorAddForm.locId}) $!{doctorAddForm.locId} #else $!{locId} #end" />
+						$!{webViewUtil.getOptionalLocListView(${map},${subLoc},${locLevel},99,${organization})}
+					    <label class="error"></label>
+					</li>
+					<li>
+						<span><i class="must">*</i>医院:</span>
+						<input type="hidden" class="showInfo" name="hospitalIdSelected" id="hospitalIdSelected" value="$!{doctorAddForm.hospitalId}" />
+						<a class="emng-select" id="hospital">
+							<strong class="emng-curselect"></strong>
+							<select name="hospitalId" class="loc" id="hospitalId" onchange="change($(this))">
+								<option value=""></option>
+							</select>
+						</a>
+					    <label class="error"></label>
+					</li>
+					<li>
+						<span><i class="must">*</i>科室:</span>
+						<input type="hidden" name="mainDepId" class="showInfo" id="mainDepId" value="$!{doctorAddForm.mainDepId}" />
+				  		<input type="hidden" class="showInfo" name="depId" id="depSelect" value="$!{doctorAddForm.depId}" />
+						<a class="emng-select org">
+							<strong class="emng-curselect"></strong>
+							<select name="office" class="loc" id="office_1" onchange="change($(this),getDep)">
+								<option value=""></option>
+							</select>
+						</a>
+					    <label class="error"></label>
+					</li>
+					<li>
+						<span><i class="must">*</i>职称:</span>
+						<input type="hidden" class="showInfo" name="docTitleSelected" id="docTitleSelected" value="$!{doctorAddForm.titleId}" />
+						<a class="emng-select" id="title">
+							<strong class="emng-curselect"></strong>
+							<select name="titleId" id="doctorTitleSelect" class="loc" onchange="change($(this))">
+								<option value=""></option>
+							</select>
+						</a>
+					    <label class="error"></label>
+					</li>
+					<li>
+						<span><i class="must">*</i>科室电话:</span>
+						<input type="text" maxlength="32" name="depPhone" id="depPhone" value="$!{doctorAddForm.depPhone}"/>
+						<label class="error"></label>
+					</li>
+					<li>
+						<span><i class="must">*</i>专业领域:</span>
+						<input type="text" name="specialitiesArea" id="specialitiesArea" maxlength="50" placeholder="填写您的专业领域,不超过50字 请勿输入空格等特殊字符"/>
+					    <label class="error"></label>
+					</li>
+					<li>
+						<span><i class="must">*</i>简介:</span>
+						<input type="text" name="summary" id="summary" maxlength="100" placeholder="填写您的个人简介,不超过100字" value="$!{doctorAddForm.summary}"/>
+					    <label class="error"></label>
+					</li>
+			    </ul>
+			</form>
+			<label id="submitReturn" style="display: none;">$!{msg}</label>
+		</div>
+	</body>
+	<script src="${link.contextPath}/js/plugin/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${link.contextPath}/js/plugin/vertifycate.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${link.contextPath}/js/plugin/noty.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${link.contextPath}/js/main/doc.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${link.contextPath}/js/plugin/doc-edit-change.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		 window.onload = function(){
+			var Msg = $('#submitReturn').html();
+			if(Msg != ''){
+				var options = {'text':Msg,'layout':'top'};
+				noty(options);
+			};	
+			if(Msg == '新建成功'){
+				setTimeout(function(){
+					document.location.href = '${link.contextPath}/doctorDetail.htm';
+				},2300);
+			}
+		}
+	});
+	</script>
+</html>

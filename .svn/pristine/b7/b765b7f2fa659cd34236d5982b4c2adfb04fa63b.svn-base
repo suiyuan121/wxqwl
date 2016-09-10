@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />	
+		<meta name="keywords" content="健康吧云管理平台" />
+		<meta name="description" content="健康吧,创享智慧健康生活" />
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/emng-1.0.0.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/public.css"/>
+		
+		<!--theme-->
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}#springTheme('emng')"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}#springTheme('public')"/>
+		<title>卡查询</title>
+		<style type="text/css">
+		   nav em{background-position: -480px 0;}	
+		   #cardNum,#batchNum,#remark,#batchName{width: 230px;}
+		   #packageId,#vipLevelA,#vipStatus,#vipStatusA{width: 248px;}
+		   
+		   .a-btn:hover{text-decoration: underline;}
+		</style>
+	</head>
+	<body>
+		<nav class="emng-flex">
+			<em></em>
+			<p>会员卡管理 <span> -> 卡查询</span></p>
+		</nav>
+		<div class="check-factor-wrapper">
+			<article>查找</article>
+			    <form action="${link.contextPath}/vipCardInfo.htm" method="post" name="queryForm" id="queryForm">
+			    	<input type="hidden" name="currentPage" id="currentPage" #if(${queryForm.currentPage}) value="${queryForm.currentPage}" #else value="1" #end />
+			    	<div class="check-factor-2 emng-flex">
+						<div class="line-two emng-flex">
+							<div class="dk-1 emng-flex">
+								<ul class="emng-flex">
+									<li>
+										<span>卡号:</span>
+										<input type="text" name="cardNum" id="cardNum" class="Trim" value="$!{queryForm.cardNum}" onchange="resetCurrentPage()"/>
+									</li>
+									<li>
+										<span>批次号:</span>
+										<input type="text" name="batchNum" id="batchNum" class="Trim" value="$!{queryForm.batchNum}" onchange="resetCurrentPage()"/>
+									</li>
+									<li>
+										<span>批次名称:</span>
+										<input type="text" name="batchName" id="batchName" class="Trim" value="$!{queryForm.batchName}" onchange="resetCurrentPage()"/>
+									</li>
+							    </ul>
+							</div>
+							<div class="dk-2 emng-flex">
+								<ul class="emng-flex">
+									<li>
+										<span>备注:</span>
+										<input type="text" name="remark" id="remark" placeholder="10个字之内" maxlength="10" value="$!{queryForm.remark}" onchange="resetCurrentPage()"/>
+									</li>
+								    <li>
+										<span>套餐名称:</span>
+										<a class="emng-select" id="vipLevelA">
+											<strong class="emng-curselect"></strong>
+											<select name="packageId" id="packageId" class="loc" onchange="change($(this),resetCurrentPage)">
+											   <option value="0">全部</option>
+											   #foreach($item in $packageList)
+								               <option value="$!{item.id}"  #if(${queryForm.packageId} == ${item.id}) selected="selected" #end>$!{item.packageName}</option>
+							                   #end
+											</select>
+										</a>
+									</li>
+									<li>
+										<span>状态:</span>
+										<a class="emng-select" id="vipStatusA">
+											<strong class="emng-curselect"></strong>
+											<select name="vipStatus" id="vipStatus" class="loc" onchange="change($(this),resetCurrentPage)">  <!--E表示未使用、D表示已使用、EX表示失效-->
+											    <option value="OTHERS">全部</option>
+												<option value="E" #if(${queryForm.vipStatus} == "E") selected="selected" #end>未使用</option>
+												<option value="D" #if(${queryForm.vipStatus} == "D") selected="selected" #end>已使用</option>
+												<option value="EX" #if(${queryForm.vipStatus} == "EX") selected="selected" #end>失效</option>
+						                    </select>
+										</a>
+									</li>
+							    </ul>
+							</div>
+						</div>
+						<div class="check-btn-wrap">
+							<button type="submit" id="card-searchBtn" class="emng-btn btn-bg-blue">卡查询</button>
+						</div>
+					</div>
+			    </form>
+		</div>
+		<div class="pagebtn-wrapper emng-flex">
+			<div class="btn-wrap emng-flex"></div>
+			<div class="page-wrap">
+				#showPageLable('queryForm' $pageList)
+			</div>
+		</div>
+		<div class="tab-wrapper">
+			<table class="emng-table">
+				<thead>
+					<tr>
+						<th>编号</th>
+						<th>批次号</th>
+						<th>批次名称</th>
+						<th>卡号</th>
+						<th>密钥</th>
+						<th>备注</th>
+						<th>套餐名称</th>
+						<th>有效日期</th>
+						<th>状态</th>
+						<th>用户ID</th>
+					</tr>
+				</thead>
+				<tbody>
+					 #set($i=($pageList.pageNum - 1) * 10)
+				     #foreach($item in $pageList.resultList)
+				     #set($i=$i+1)
+					 	<tr>
+					 		<td>$i</td>
+					 		<td>$!{item.longBatch}</td>
+					 		<td>$!{item.batchName}</td>
+					 		<td>$!{item.cardNum}</td>
+					 		<td>$!{item.cardPwd}</td>
+					 		<td>$!{item.memo}</td>
+					 		<td>$!{item.packageName}</td>
+					 		<td>$dateUtil.getWebDateString($!{item.gmtExpire})</td>
+					 		<td>$!{item.status}</td>
+					 		<td><a href="${link.contextPath}/userInfo.htm?uid=$!{item.uid}" class="a-btn">$!{item.uid}</a></td>
+					 	</tr>
+			 	    #end
+				</tbody>
+		    </table>
+		</div>
+	</body>
+	<script src="${link.contextPath}/js/plugin/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${link.contextPath}/js/plugin/noty.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${link.contextPath}/js/plugin/vertifycate.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="${link.contextPath}/js/plugin/select-changes.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+    	$(document).ready(function(){
+    		//刷新时保持select选框的值不变
+    		$('.loc').each(function(i,e){
+    			change($(e));
+    		});
+    	});
+    </script>
+</html>

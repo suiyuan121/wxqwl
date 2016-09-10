@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />	
+		<meta name="keywords" content="健康吧云管理平台" />
+		<meta name="description" content="健康吧,创享智慧健康生活" />
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/emng-1.0.0.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/public.css"/>
+		
+		<!--theme-->
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}#springTheme('emng')"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}#springTheme('public')"/>
+		<title>会员套餐</title>
+		<style type="text/css">
+			nav em{background-position: -480px 0;}
+			#packageName{width: 500px;}
+		</style>
+	</head>
+	<body>
+		<nav class="emng-flex">
+			<em></em>
+			<p>会员卡管理 <span> -> 会员套餐</span></p>
+		</nav>
+		<div class="check-factor-wrapper">
+			<article>查找</article>
+			<form action="${link.contextPath}/packageMng.htm" name="queryForm" id="queryForm" method="post">
+				 <input type="hidden" name="currentPage" id="currentPage"#if(${queryForm.currentPage}) value="${queryForm.currentPage}"#else value="1" #end />
+				 <div class="check-factor-1 emng-flex">
+					<ul class="emng-flex">
+						<li>
+							<span>套餐名:</span>
+							<input type="text" class="Trim" id="packageName" name="packageName" value="$!{queryForm.packageName}" placeholder="10个字之内" maxlength="10" onchange="resetCurrentPage()"/>
+						</li>
+						<li>
+							<span>服务有效期:</span>
+							<a class="emng-select" id="statusA">
+							   <strong class="emng-curselect"></strong>
+							   <select name="timeType" id="validDate" class="loc" onchange="change($(this),resetCurrentPage)">
+							   	    <option value="0"></option>
+									<option value="1" #if(${queryForm.timeType} == "1") selected="selected" #end>1个月</option>
+									<option value="3" #if(${queryForm.timeType} == "3") selected="selected" #end>3个月</option>
+									<option value="6" #if(${queryForm.timeType} == "6") selected="selected" #end>6个月</option>
+									<option value="12" #if(${queryForm.timeType} == "12") selected="selected" #end>12个月</option>
+							   </select>
+							</a>
+						</li>
+					</ul>
+					<div class="check-search-wrapper emng-flex">
+					    <button class="emng-btn btn-bg-blue" id="vipcomb-searchBtn" type="submit">查找</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="pagebtn-wrapper emng-flex">
+			<div class="btn-wrap emng-flex">
+				<a href="${link.contextPath}/createPackage.htm" id="vipcomb-buttonNew" class="emng-btn btn-bg-gray">新建</a>
+			</div>
+			<div class="page-wrap">
+				#showPageLable('queryForm' $pageList)
+			</div>
+		</div>
+		<div class="tab-wrapper">
+			<table class="emng-table">
+				<thead>
+					<tr>
+						<th>编号</th>
+						<th>套餐名称</th>
+						<th>积分</th>
+						<th>服务有效期</th>
+						<th>服务列表</th>
+						<th>操作</th>
+						<th>删除</th>
+					</tr>
+				</thead>
+				<tbody>
+					#set($i=($pageList.pageNum - 1) * 10)
+					#foreach($item in $pageList.resultList)
+					#set($i=$i+1)
+				 	<tr>
+				 		<td>$i</td>
+				 		<td class="item-id" style="display:none">$!{item.id}</td>
+				 		<td>$!{item.packageName}</td>
+				 		<td>$!{item.score}</td>
+				 		<td>$!{item.timeType.desc}</td>
+				 		<td class="serList">$!{item.serviceNames}</td>
+				 		<td><a class="emng-editbtn" href="${link.contextPath}/modifyPackage.htm?packageId=${item.id}"></a></td>
+				 		<td><a href="javascript:;" class="a-btn">[删除]</a></td>
+				 	</tr>
+				 	#end
+				</tbody>
+		    </table>
+		</div>
+	</body>
+	<script src="${link.contextPath}/js/plugin/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${link.contextPath}/js/plugin/noty.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${link.contextPath}/js/plugin/vertifycate.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="${link.contextPath}/js/plugin/select-changes.js" type="text/javascript" charset="utf-8"></script>
+    <script src="${link.contextPath}/js/plugin/Widget.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${link.contextPath}/js/plugin/Window.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+    	$(document).ready(function(){
+    		//刷新时保持select选值不变
+    		$('.loc').each(function(i,e){
+    			change($(e));
+    		});
+    		
+    		$('.serList').each(function(i,e){
+    			$(e).cutlongStr(25);
+    		});
+    		
+    		//删除
+    		$('.a-btn').on('click',function(){
+    			var self = $(this);
+                var itemID = self.parent().siblings('.item-id').html();
+                var win = new Window().confirm({
+                	content:'该过程为不可逆过程,是否继续?',
+                	handler4ConfirmBtn:function(){
+                		$.ajax({
+                			type:'get',
+                			url:'${link.contextPath}/deletePackage.json?packageId='+itemID,
+                			async:true,
+                			success:function(data){
+                				if(data.packageDeleteAjaxResponse.success){
+            				        $("#queryForm").submit();
+		            			}else{
+		            				var Msg = data.packageDeleteAjaxResponse.resultMsg;
+		            				var opt = {'text':Msg,'layOut':'bottom'};
+		            				noty(opt);
+		            			}
+                			},
+                			error:function(){
+                				var opts = {'text':'请求无响应'};
+	            					noty(opts);
+                			}
+                		});
+                	}
+                });
+    		});
+    	});
+    </script>
+</html>

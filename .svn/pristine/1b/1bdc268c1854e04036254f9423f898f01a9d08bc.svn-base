@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />	
+		<meta name="keywords" content="健康吧云管理平台" />
+		<meta name="description" content="睿博健康吧,创享智慧健康生活" />
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/emng-1.0.0.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/menu-list.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/public.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/archives.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/jquery-ui.min.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/jquery-ui.theme.min.css"/>
+		
+		<!--theme-->
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}#springTheme('emng')"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}#springTheme('menu')"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}#springTheme('public')"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}#springTheme('archives')"/>
+		<title>尿酸</title>
+		<style type="text/css">
+             /*自定义datePicker的样式*/
+			   	.ui-widget-header{border: 1px solid #2F2F2F;}
+		</style>
+	</head>
+	<body>
+		<nav class="emng-flex">
+			<em></em>
+			<p>用户管理 -> 用户信息  -> <span>健康档案</span></p>
+		</nav>
+		<div id="main-section" class="emng-flex">
+			<section id="test-list">
+				<div class="menu-in-wrapper">
+					<ul>
+						<li class="menu-in-one"> 
+                            <div class="menu-in-header">
+                                <a href="exportData.htm?uid=$!{uaDetailQueryForm.uid}">批量导出数据</a>
+                            </div>
+                        </li>
+						<li class="menu-in-one"> 
+                            <div class="menu-in-header">
+                                <a href="bpDetail.htm?uid=$!{uaDetailQueryForm.uid}">血压</a>
+                            </div>
+                        </li>
+                        <li class="menu-in-one">
+                            <div class="menu-in-header">
+                                <a href="boDetail.htm?uid=$!{uaDetailQueryForm.uid}">血氧</a>
+                            </div>
+                        </li>
+                        <li class="menu-in-one">
+                            <div class="menu-in-header">
+                                <a href="bmiDetail.htm?uid=$!{uaDetailQueryForm.uid}">身高体重</a>
+                            </div>
+                        </li>
+                        <li class="menu-in-one">
+                            <div class="menu-in-header">
+                                <a href="tpDetail.htm?uid=$!{uaDetailQueryForm.uid}">体温</a>
+                            </div>
+                        </li><li class="menu-in-one">
+                            <div class="menu-in-header">
+                                <a href="bciDetail.htm?uid=$!{uaDetailQueryForm.uid}">人体成分</a>
+                            </div>
+                        </li>
+                        <li class="menu-in-one">
+                            <div class="menu-in-header">
+                                <a href="ecgDetail.htm?uid=$!{uaDetailQueryForm.uid}">心电</a>
+                            </div>
+                        </li>
+                        <li class="menu-in-one">
+                            <div class="menu-in-header">
+                                <a href="wlDetail.htm?uid=$!{uaDetailQueryForm.uid}">腰围</a>
+                            </div>
+                        </li>
+                        <li class="menu-in-one">
+                            <div class="menu-in-header active">
+                                <a href="uaDetail.htm?uid=$!{uaDetailQueryForm.uid}">尿酸</a>
+                            </div>
+                        </li>
+                        <li class="menu-in-one">
+                            <div class="menu-in-header">
+                                <a href="cholDetail.htm?uid=$!{uaDetailQueryForm.uid}">胆固醇</a>
+                            </div>
+                        </li>
+                        <li class="menu-in-one">
+                            <div class="menu-in-header">
+                                <a href="glDetail.htm?uid=$!{uaDetailQueryForm.uid}">血糖</a>
+                            </div>
+                        </li>
+                        <li class="menu-in-one">
+                            <div class="menu-in-header">
+                                <a href="urineDetail.htm?uid=$!{uaDetailQueryForm.uid}">尿液</a>
+                            </div>
+                        </li>
+					</ul>
+				</div>
+			</section>
+			<section id="test-content">
+				<div class="check-factor-wrapper">
+					<article>查找</article>
+					 <form name="uaDetailQueryForm" id="uaDetailQueryForm" method="post" action="uaDetail.htm" >
+                       <input type="hidden" name="currentPage" #if(${uaDetailQueryForm.currentPage}) value="${uaDetailQueryForm.currentPage}" #else value="1" #end>
+                       <input type="hidden" name="uid" value="${uaDetailQueryForm.uid}">
+                         <div class="check-factor-1 emng-flex">
+                            <ul class="emng-flex">
+                                <li class="date-wrap">
+                                    <span>开始时间:</span>
+                                    <input type="text" name="startDate" id="startDate" readonly="readonly" value="$!{uaDetailQueryForm.startDate}"/>
+                                </li>
+                                <li class="date-wrap">
+                                    <span>结束时间:</span>
+                                    <input type="text" name="endDate" id="endDate" readonly="readonly" value="$!{uaDetailQueryForm.endDate}"/>
+                                </li>
+                            </ul>
+                            <div class="check-search-wrapper emng-flex">
+                                <button class="emng-btn btn-bg-blue" type="submit">查找</button>
+                            </div>
+                        </div>
+                    </form>
+				</div>
+				<div class="pagebtn-wrapper emng-flex">
+					<div class="btn-wrap emng-flex"></div>
+					<div class="page-wrap">
+                       #showPageLable('uaDetailQueryForm' $pageList)
+					</div>
+				</div>
+				<div class="tab-wrapper">
+					<table class="emng-table">
+						<thead>
+							<tr>
+								<th>测试时间</th>
+								<th>尿酸(mmol/L)</th>
+							</tr>
+						</thead>
+						<tbody>
+						#foreach($item in $pageList.resultList)
+                            <tr>
+                                <td class="center">$dateUtil.getNewFormatDateString($!{item.gmtTest})</td>
+                                <td class="center">$!{item.ua}</td>
+                            </tr>
+                         #end
+						</tbody>
+				    </table>
+				</div>
+		    </section>
+		</div>
+	</body>
+	<script src="${link.contextPath}/js/plugin/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+    <script src="${link.contextPath}/js/plugin/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="${link.contextPath}/js/plugin/datepickerChinese.js" type="text/javascript" charset="utf-8"></script>
+    <script src="${link.contextPath}/js/main/sta-area.js" type="text/javascript" charset="utf-8"></script>
+</html>

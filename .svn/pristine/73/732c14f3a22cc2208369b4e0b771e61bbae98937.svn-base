@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />	
+		<meta name="keywords" content="健康吧云管理平台" />
+		<meta name="description" content="健康吧,创享智慧健康生活" />
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/emng-1.0.0.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/public.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/authorization.css"/>
+		
+		<!--theme-->
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}#springTheme('emng')"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}#springTheme('public')"/>
+		<title>人员授权</title>
+		<style type="text/css">
+			nav em{background-position: -120px 0;}
+		</style>
+	</head>
+	<body>
+		<nav class="emng-flex">
+			<em></em>
+			<p>权限管理 -> 角色管理<span>->功能授权</span></p>
+		</nav>
+		<div class="btn-area emng-flex">
+			<p><span>角色名称:</span>$!{role.name}</p>
+			<a class="emng-btn btn-bg-blue" id="go-back" href="${link.contextPath}/roleMng.htm">返回</a>
+			<button class="emng-btn btn-bg-blue" id="go-submit" type="button">提交</button>
+		</div>
+		<form method="post" name="myform" id="myform" action="${link.contextPath}/rolePermMng.htm">
+			<input type="hidden"  id="roleId" name="roleId" value="$!{role.id}" />
+			<div class="switch-wrap emng-flex">
+				<div class="select-wrap">
+					<h3>未授予的功能</h3>
+					<div class="select-list">
+						<ul id="list1">
+							#foreach($item in ${allPermiss})
+                            <li data-value="$!{item.id}" title="$!{item.name}">$!{item.name}</li>
+                            #end
+						</ul>
+					</div>
+				</div>
+				<div class="switch-btn-area">
+					<button type="button" class="emng-btn btn-bg-gray" id="leftOne"> > </button>
+					<button type="button" class="emng-btn btn-bg-gray" id="leftAll"> >> </button>
+					<button type="button" class="emng-btn btn-bg-gray" id="rightOne"> < </button>
+					<button type="button" class="emng-btn btn-bg-gray" id="rightAll"> << </button>
+				</div>
+				<div class="select-wrap">
+					<h3>授予的功能</h3>
+					<div class="select-list">
+						<ul id="list2">
+							#foreach($item in ${curPermiss})
+	                        <li data-value="$!{item.id}" title="$!{item.name}">$!{item.name}</li>
+	                        #end
+						</ul>
+					</div>
+				</div>
+			</div>
+			<input type="hidden" name="permIds" id="permIds" value="" />
+		</form>
+		<label id="submitReturn">$!{msg}</label>
+	</body>
+	<script src="${link.contextPath}/js/plugin/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${link.contextPath}/js/main/authorization.js" type="text/javascript" charset="utf-8"></script>
+    <script src="${link.contextPath}/js/plugin/noty.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+    	window.onload = function(){
+    		var Msg = $('#submitReturn').html();
+    		var options = null;
+    		if(Msg != ''){
+    			if(Msg == 'SUCCESS'){
+					options = {'text':'操作成功','layout':'top'};
+					noty(options);
+				}else{
+					options = {'text':Msg,'layout':'top'};
+					noty(options);
+				}
+    		}
+    	}
+    </script>
+</html>

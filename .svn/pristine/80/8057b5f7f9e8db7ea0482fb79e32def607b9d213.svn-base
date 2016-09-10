@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />	
+		<meta name="keywords" content="健康吧云管理平台" />
+		<meta name="description" content="健康吧,创享智慧健康生活" />
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/emng-1.0.0.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/public.css"/>
+		
+		<!--theme-->
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}#springTheme('emng')"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}#springTheme('public')"/>
+		<title>编辑组织</title>
+		<style type="text/css">
+		    nav em{background-position: -60px 0;}
+		
+			.tab li:nth-last-of-type(3) label,.tab li:nth-last-of-type(4) label{display:inline-block; width:95px;}
+			.org,.org select{width: 230px;}
+			
+			.emng-select,.emng-select .loc{width: 228px;}
+			.emng-select .emng-curselect{width: 200px;}
+			@media (min-width: 1000px) and (max-width: 1499px){
+			    .emng-select{width: 261px;}
+			    .emng-select .loc,.emng-select .emng-curselect{width: 227px;}
+            }
+            @media (min-width: 1500px) and (max-width:1600px){
+			    .emng-select{width: 327px;}
+			    .emng-select .loc,.emng-select .emng-curselect{width: 293px;}
+            }
+            @media (min-width: 1620px) and (max-width:1800px){
+			   .emng-select{width: 427px;}
+			   .emng-select .loc,.emng-select .emng-curselect{width: 393px;}
+            }
+		</style>
+	</head>
+	<body>
+		<nav class="emng-flex">
+			<em></em>
+			<p>组织人员 -> 组织接入管理<span> ->编辑组织</span></p>
+		</nav>
+		<div class="btn-area emng-flex">
+			<a href="${link.contextPath}/org/device_ctrl/index.htm" class="emng-btn btn-bg-blue" id="go-back">返回</a>
+			<button class="emng-btn btn-bg-blue" id="go-submit" type="button">提交</button>
+		</div>
+		<div class="tab">
+			<form action="${link.contextPath}/org/device_ctrl/modify.htm" method="post" name="" id="formModify">
+				<input type="hidden" name="id" value="$!{orgDeviceForm.id}" />
+				<ul>
+					<li>
+						<span>组织名称:</span>
+						#if(${operator.org}) 
+							 <a class="emng-select">
+							 	<strong class="emng-curselect"></strong>
+				  				<select name="orgOne" class="loc ogTag" id="loc_default" disabled="disabled" title="$!{operator.org.fullName}">
+                                    <option value="$!{operator.orgId}" selected="selected" >$!{operator.org.fullName}</option>
+                                </select>
+							 </a>
+                            #end
+						
+						#if($allList)
+                            #set($i = 0)
+			  				#foreach($items in $allList)
+                            <a class="emng-select org">
+								<strong class="emng-curselect disabled"></strong>
+								<select disabled="disabled" class="loc" id="dis$!{i}">
+									<option value=""></option>
+									#foreach($item in $items)
+	                                ## ${idList.get($i)}
+	                                 <option value="${item.id}" #if(${item.id} == ${idList.get($i)}) selected="selected" #end >${item.name}</option> 
+	                                #end
+								</select>
+						    </a>
+						    #set($i = $i + 1)
+                            #end
+				  		#end
+					</li>
+					<li>
+						<span>设备登录名:</span>
+						<input type="text" id="logonName" name="logonName"  value="$!{orgDeviceForm.logonName}" class="readyonly" readonly="readonly"/>			   
+					</li>
+					<li>
+						<span>密码:</span>
+						<input type="text" id="password" name="password" value="$!{orgDeviceForm.password}" class="readyonly" readonly="readonly"/>
+					</li>
+					<li>
+						<span><i class="must">*</i>可连接数:</span>
+						<input type="text" id="maxOnline" name="maxOnline" maxlength="10" value="$!{orgDeviceForm.maxOnline}" placeholder="10个字之内   只能输入整数"/>
+						<label class="error"></label>
+					</li>
+					<li>
+						<span>检测项权限:</span>
+						<label class="emng-checkbox-wrap" style="margin-left:-4px;">
+							<input type="checkbox" class="emng-checkbox emng-checkbox-item" name="checkAll" id="checkAll" value="" #if(${orgDeviceForm.cats.size()} == 10) checked="checked" #end/>
+							<b></b>
+						</label>全选
+					</li>
+					<li>
+						<span></span>
+						<label class="emng-checkbox-wrap"><input type="checkbox" class="emng-checkbox emng-checkbox-item" name="cats" #if($arrayUtil.contains(${orgDeviceForm.cats}, 'bp')) checked="checked" #end value="bp" /><b></b>血压</label>
+						<label class="emng-checkbox-wrap"><input type="checkbox" class="emng-checkbox emng-checkbox-item" name="cats" #if($arrayUtil.contains(${orgDeviceForm.cats}, 'gl')) checked="checked" #end value="gl" /><b></b>血糖</label>
+						<label class="emng-checkbox-wrap"><input type="checkbox" class="emng-checkbox emng-checkbox-item" name="cats" #if($arrayUtil.contains(${orgDeviceForm.cats}, 'temp')) checked="checked" #end value="temp" /><b></b>体温</label>
+						<label class="emng-checkbox-wrap"><input type="checkbox" class="emng-checkbox emng-checkbox-item" name="cats" #if($arrayUtil.contains(${orgDeviceForm.cats}, 'bo')) checked="checked" #end value="bo" /><b></b>血氧</label>
+						<label class="emng-checkbox-wrap"><input type="checkbox" class="emng-checkbox emng-checkbox-item" name="cats" #if($arrayUtil.contains(${orgDeviceForm.cats}, 'bmi')) checked="checked" #end value="bmi" /><b></b>身高体重</label>
+						<label class="emng-checkbox-wrap"><input type="checkbox" class="emng-checkbox emng-checkbox-item" name="cats" #if($arrayUtil.contains(${orgDeviceForm.cats}, 'bci')) checked="checked" #end value="bci" /><b></b>人体成分</label>	
+					</li>
+					<!--一行放不下,所以分行显示-->
+					<li>
+						<span></span>
+						<label class="emng-checkbox-wrap"><input type="checkbox" class="emng-checkbox emng-checkbox-item" name="cats" #if($arrayUtil.contains(${orgDeviceForm.cats}, 'ecg')) checked="checked" #end value="ecg" /><b></b>心电</label>
+						<label class="emng-checkbox-wrap"><input type="checkbox" class="emng-checkbox emng-checkbox-item" name="cats" #if($arrayUtil.contains(${orgDeviceForm.cats}, 'wl')) checked="checked" #end value="wl" /><b></b>腰围</label>
+						<label class="emng-checkbox-wrap"><input type="checkbox" class="emng-checkbox emng-checkbox-item" name="cats" #if($arrayUtil.contains(${orgDeviceForm.cats}, 'ua')) checked="checked" #end value="ua" /><b></b>尿酸</label>
+						<label class="emng-checkbox-wrap"><input type="checkbox" class="emng-checkbox emng-checkbox-item" name="cats" #if($arrayUtil.contains(${orgDeviceForm.cats}, 'chol')) checked="checked" #end value="chol" /><b></b>胆固醇</label>
+						<label class="emng-checkbox-wrap"><input type="checkbox" class="emng-checkbox emng-checkbox-item" name="cats" #if($arrayUtil.contains(${orgDeviceForm.cats}, 'urine')) checked="checked" #end value="urine" /><b></b>尿液</label>
+					</li>
+					<li>
+						<span>备注:</span>
+						<input type="text" name="memo" id="memo" #if(${orgDeviceForm.memo}) value="$!{orgDeviceForm.memo}" #end/>
+					</li>
+					<li>
+						<span>注释:</span>
+						<i class="must">如果需打开健康助手界面的“技术支持“，在备注中加入supportshow=1</i>
+					</li>
+				</ul>
+			</form>
+		</div>
+	</body>
+	<script src="${link.contextPath}/js/plugin/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${link.contextPath}/js/plugin/vertifycate.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${link.contextPath}/js/plugin/select-changes.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${link.contextPath}/js/plugin/noty.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			//表单验证
+			(function(){
+				$('#go-submit').click(function(){
+					if(!$('#maxOnline').validator({errorTips:'请正确的可连接数',required:true,requiredMsg:'可连接数不能为空',testType:'onlyNum'})){
+						return false;
+					}else{
+						$('#formModify').submit();
+					}
+				});
+				$('#maxOnline').blur(function(){
+					$(this).validator({errorTips:'请正确的可连接数',required:true,requiredMsg:'可连接数不能为空',testType:'onlyNum'});
+				});
+			})();
+			
+			//全选
+			(function(){
+				$('#checkAll').checkAll($('input[name=cats]'));
+				//点击查询时,保持select选值不变
+			    $('.loc').each(function(i,e){
+			    	change($(e));
+			    });
+			})();
+			
+			window.onload = function(){
+				var URL =  encodeURI(document.location.toString());
+				if(URL.indexOf('msg=')!=-1){
+					var tips = URL.substring(URL.indexOf('=')+1,URL.indexOf('&'));
+					if(tips != 'success'){
+						var options={"text":'新增成功',"layout":"top"};
+					    noty(options);
+					}else if(tips == 'success'){
+						var options={"text":'编辑成功',"layout":"top"};
+					    noty(options);
+					}
+				}
+		    }
+		});
+	</script>
+</html>

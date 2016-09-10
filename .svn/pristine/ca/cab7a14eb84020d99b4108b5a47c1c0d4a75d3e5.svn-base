@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />	
+		<meta name="keywords" content="健康吧云管理平台" />
+		<meta name="description" content="健康吧,创享智慧健康生活" />
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/emng-1.0.0.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/public.css"/>
+		
+		<!--theme-->
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}#springTheme('emng')"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}#springTheme('public')"/>
+		<title>医生认证</title>
+		<style type="text/css">
+			nav em{background-position: -240px 0;}
+			.emng-checkbox-wrap{margin-right: 20px;}
+			.emng-checkbox-wrap a:hover{text-decoration: underline;}
+			.error-check{color: red; font-size: 12px;}
+		</style>
+	</head>
+	<body>
+		<nav class="emng-flex">
+			<em></em>
+			<p>医生管理 -> 医生信息<span> -> 医生认证</span></p>
+		</nav>
+		<div class="btn-area emng-flex">
+			<a href="${link.contextPath}/doctorValidate.htm" class="emng-btn btn-bg-blue">返回</a>
+			<button class="emng-btn btn-bg-blue" id="return-submit">驳回认证</button>
+			<button class="emng-btn btn-bg-blue" id="go-submit">认证通过</button>
+		</div>
+		<div class="tab">
+			<form id="validateForm" action="${link.contextPath}/validateDoctor.htm" method="post">
+				<input type="hidden" name="uid" value="$!{view.uid}"></input>
+				<ul>
+					<li>
+						<span><i class="must">*</i>手机号码:</span>
+						<input type="text" id="pNum" name="pNum" class="readyonly" readonly="readonly" value="$!{view.phoneNumber}"/>
+					</li>
+					<li>
+						<span><i class="must">*</i>姓名:</span>
+						<input type="text" id="uname" name="uname" class="readyonly" readonly="readonly" value="$!{view.name}"/>
+					</li>
+					<li>
+						<span><i class="must">*</i>省市:</span>
+						<input type="text" name="province" id="province" class="readyonly" readonly="readonly" value="$!{view.province}" />
+					</li>
+					<li>
+						<span><i class="must">*</i>医院:</span>
+						<input type="text" name="hospital" id="hospital" class="readyonly" readonly="readonly" value="$!{view.hospitalName}" />
+					</li>
+					<li>
+						<span><i class="must">*</i>科室:</span>
+						<input type="text" name="office" id="office" class="readyonly" readonly="readonly" value="$!{view.departmentName}" />
+					</li>
+					<li>
+						<span><i class="must">*</i>职称:</span>
+						<input type="text" name="jobLevel" id="jobLevel" class="readyonly" readonly="readonly" value="$!{view.titleName}" />
+					</li>
+					<li>
+						<span><i class="must">*</i>科室电话:</span>
+						<input type="text" name="officePhone" id="officePhone" class="readyonly" readonly="readonly" value="$!{view.departemtPhone}"/>
+					</li>
+					<li>
+						<span></span>
+						<label class="emng-checkbox-wrap">
+							<input type="checkbox" class="emng-checkbox emng-checkbox-item file" name="fileComplete" id="fileComplete" value="Y" />
+							<b></b>
+							<a href="${link.contextPath}/checkLicense.htm" target="_blank">查看工牌</a> 
+						</label>
+						<label class="emng-checkbox-wrap">
+							<input type="checkbox" class="emng-checkbox emng-checkbox-item file" name="fileNoWrong" id="fileNoWrong" value="Y" />
+							<b></b>
+							<a href="${link.contextPath}/checkLicense.htm" target="_blank">查看职业医师资格证书</a> 
+						</label>
+					</li>
+					<li>
+						<span></span>
+						<label class="error-check" id="error-check"></label>
+					</li>
+			    </ul>
+			</form>
+			
+			<form action="${link.contextPath}/validateDoctor.htm" method="post" id="errorForm">
+			     <input type="hidden" name="uid" value="$!{view.uid}" />
+			    <!-- <div class="emng-mask"></div>-->
+			     <div class="window_boundingBox" id="returnBox" style="width: 350px; height: 150px; left: 500px; top: 120px; display: none;">
+			     	    <div class="window_header">
+			     	    	<label class="emng-checkbox-wrap" style="margin-right: 3px;">
+			     	    	   <input type="checkbox" class="emng-checkbox emng-checkbox-item" name="withProblem" id="withProblem" value="Y" />
+			     	    	   <b></b>
+			     	    	</label>
+			     	    	资料内容有问题
+			     	    </div>
+			     	    <div class="window_body">
+			     	    	<p class="window_promptInputWrapper" style="text-indent: 30px;">
+			     	    		<input type="text" placeholder="最多输入20个字" maxlength="20"  value="" name="whyWithproblem" id="whyWithproblem" class="window_promptInput" />
+			     	    		<label class="labelError"></label>
+			     	    	</p>
+			     	    </div>
+			     	    <div class="window_footer">
+			     	    	<input type="button" id="cancelBtn" value="取消" class="window_cancelBtn">
+			     	    	<input type="button" id="confirmReturn" value="提交" class="emng-btn btn-bg-blue window_promptBtn"/>
+			     	    </div>
+			     </div>
+			</form>
+		</div>
+	</body>
+	<script src="${link.contextPath}/js/plugin/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${link.contextPath}/js/plugin/vertifycate.min.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+    	$(document).ready(function(){
+    		$('#go-submit').click(function(){
+    			if(!$('#fileComplete').prop('checked') || !$('#fileNoWrong').prop('checked')){
+    				$('#error-check').html('“工牌”和“职业医生资格证书”选项必须都勾选才能认证通过');
+    				return false;
+    			}else{
+    				$('#validateForm').submit();
+    			}
+    		});
+    		
+    		function disabled(){
+    			if($('#fileComplete').prop('checked') && $('#fileNoWrong').prop('checked')){
+	    			$('#return-submit').attr('disabled',true);
+	    			$('#error-check').html('');
+    		    }else{
+    		    	$('#return-submit').attr('disabled',false);
+    		    }
+    		}
+    		disabled();
+    		$('.file').click(function(){
+    			disabled();
+    		});
+    		
+    		var mask = $('<div class="emng-mask"></div>');
+			$('#return-submit').click(function(){
+				mask.insertBefore($('#returnBox'));
+				$('#returnBox').show();
+			});
+			$('#cancelBtn').click(function(){
+				mask.remove();
+				$('#returnBox').hide();
+			});
+			$('#confirmReturn').click(function(){
+				if(!$('#withProblem').prop('checked')){
+					$('.labelError').html('请至少勾选一项');
+					return false;
+				}else{
+					$('.labelError').html('');
+					$('#errorForm').submit();
+				}
+			});
+    	});
+    </script>
+</html>

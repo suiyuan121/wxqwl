@@ -1,0 +1,25 @@
+
+
+#####################################
+## run.mode 0:dev   1:prod
+## config.file.type == dev | prod
+#####################################
+run.mode = 0
+config.file.type=dev
+
+
+#####################################
+## test.env == mirror | dev
+#####################################
+test.env=dev
+
+
+
+#####################################
+## logback config
+#####################################
+log.home = /etc/tomcat/ntu_logs
+logger.level = info
+logger.sql.level = debug
+logger.debug.level = info
+

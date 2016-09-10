@@ -1,0 +1,36 @@
+package cn.edu.ntu.jtxy.resp;
+
+import org.junit.Test;
+
+import cn.edu.ntu.jtxy.BaseTest;
+import cn.edu.ntu.jtxy.core.model.wx.StudentInfoDo;
+import cn.edu.ntu.jtxy.core.model.wx.StudentInfoDo.GenderTypeEnum;
+import cn.edu.ntu.jtxy.core.repository.wx.StudentInfoRepository;
+
+/**
+ * 
+ * @author {jin.zhang@witontek.com}
+ * @version $Id: RefreshTokenRepository.java, v 0.1 2016年3月23日 下午8:32:05 {jin.zhang@witontek.com} Exp $
+ */
+public class StudentInfoRepositoryTest extends BaseTest {
+
+    @Test
+    public void test_add() {
+        StudentInfoRepository resp = getContext().getBean(StudentInfoRepository.class);
+
+        StudentInfoDo studentInfoDo = new StudentInfoDo();
+        studentInfoDo.setAddress("江苏省南通市崇川区");
+        studentInfoDo.setClassNo("计121");
+        studentInfoDo.setDepartment("计算机学院");
+        studentInfoDo.setGrade("1");
+        studentInfoDo.setIdNo("321322199102284616");
+        studentInfoDo.setMemo("add");
+        studentInfoDo.setPhone("18362156503");
+        studentInfoDo.setRealName("张进");
+        studentInfoDo.setSchool("南通大学");
+        studentInfoDo.setSex(GenderTypeEnum.男.getCode());
+        studentInfoDo.setStuNo("1213022016");
+        long ret = resp.add(studentInfoDo);
+        logger.info("xxxxxxlist={}", ret);
+    }
+}

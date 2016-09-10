@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.ntu.jtxy.core.dao.wx.StudentInfoDao">
+
+	<resultMap id="RM" type="cn.edu.ntu.jtxy.core.model.wx.StudentInfoDo">
+		<result property="id" column="id" />
+		<result property="stuNo" column="stu_no" />
+		<result property="idNo" column="id_no" />
+		<result property="phone" column="phone" />
+		<result property="sex" column="sex" />
+		<result property="realName" column="real_name" />
+		<result property="school" column="school" />
+		<result property="department" column="department" />
+		<result property="grade" column="grade" />
+		<result property="classNo" column="class_no" />
+		<result property="address" column="address" />
+		<result property="memo" column="memo" />
+		<result property="createTime" column="create_time" />
+		<result property="modifyTime" column="modify_time" />
+	</resultMap>
+
+	<sql id="allColumnsForInsert">
+		stu_no,
+		id_no,
+		phone,
+		sex,
+		real_name,
+		school,
+		department,
+		grade,
+		class_no,
+		address,
+		memo,
+		create_time,
+		modify_time
+	</sql>
+
+	<sql id="allColumnsForSelect">
+		id,
+		stu_no,
+		id_no,
+		phone,
+		sex,
+		real_name,
+		school,
+		department,
+		grade,
+		class_no,
+		address,
+		memo,
+		create_time,
+		modify_time
+	</sql>
+
+	<insert id="add" parameterType="cn.edu.ntu.jtxy.core.model.wx.StudentInfoDo"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into jt_student_info (
+		<include refid="allColumnsForInsert"></include>
+		) values(
+		#{stuNo},
+		#{idNo},
+		#{phone},
+		#{sex},
+		#{realName},
+		#{school},
+		#{department},
+		#{grade},
+		#{classNo},
+		#{address},
+		#{memo},
+		getdate(),
+		getdate()
+		)
+	</insert>
+
+	<select id="getByStuNo" resultMap="RM">
+		select top 1
+		<include refid="allColumnsForSelect"></include>
+		from jt_student_info
+		where stu_no = #{stuNo}
+	</select>
+
+	<select id="pageQueryCount" parameterType="java.util.Map"
+		resultType="int">
+		select count(*)
+		from
+		jt_student_info
+		where 1=1
+		<if test="stuNo!=null and stuNo!=''">
+			and stu_no like '%'+#{stuNo}+'%'
+		</if>
+		<if test="idNo!=null and idNo!=''">
+			and id_no like '%'+#{idNo}+'%'
+		</if>
+		<if test="stuName!=null and stuName!=''">
+			and real_name like '%'+#{stuName}+'%'
+		</if>
+		<if test="phone!=null and phone!=''">
+			and phone like '%'+#{phone}+'%'
+		</if>
+	</select>
+
+	<select id="pageQuery" parameterType="java.util.Map" resultMap="RM">
+		select top ${pageSize}
+		<include refid="allColumnsForSelect"></include>
+		from
+		(
+		select row_number() over(order by create_time) as rownumber,*
+		from
+		jt_student_info
+		where 1=1
+		<if test="stuNo!=null and stuNo!=''">
+			and stu_no like '%'+#{stuNo}+'%'
+		</if>
+		<if test="idNo!=null and idNo!=''">
+			and id_no like '%'+#{idNo}+'%'
+		</if>
+		<if test="stuName!=null and stuName!=''">
+			and real_name like '%'+#{stuName}+'%'
+		</if>
+		<if test="phone!=null and phone!=''">
+			and phone like '%'+#{phone}+'%'
+		</if>
+		) A
+		where rownumber > #{offset}
+
+	</select>
+
+</mapper>

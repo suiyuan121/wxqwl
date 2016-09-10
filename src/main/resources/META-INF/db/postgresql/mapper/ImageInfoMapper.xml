@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.wxqwl.zj.core.dao.ImageInfoDao">
+
+	<resultMap id="RM" type="cn.wxqwl.zj.core.model.ImageInfoDo">
+		<result property="id" column="id" />
+		<result property="uid" column="uid" />
+		<result property="type" column="type" />
+		<result property="url" column="url" />
+		<result property="status" column="status" />
+		<result property="memo" column="memo" />
+		<result property="gmtCreate" column="gmt_create" />
+	</resultMap>
+
+	<sql id="allColumns">
+		id,
+		uid,
+		type,
+		url,
+		status,
+		memo,
+		gmt_create
+	</sql>
+
+	<insert id="add" parameterType="cn.wxqwl.zj.core.model.ImageInfoDo">
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			select
+			nextval('seq_image_info ')
+		</selectKey>
+		insert into image_info (
+		<include refid="allColumns"></include>
+		) values(
+		#{id},
+		#{uid},
+		#{type},
+		#{url},
+		#{status},
+		#{memo},
+		now()
+		)
+	</insert>
+
+
+
+</mapper>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />	
+		<meta name="keywords" content="健康吧云管理平台" />
+		<meta name="description" content="睿博健康吧,创享智慧健康生活" />
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/emng-1.0.0.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/menu-list.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/public.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/archives.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/jquery-ui.min.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/jquery-ui.theme.min.css"/>
+		
+		<!--theme-->
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}#springTheme('emng')"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}#springTheme('menu')"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}#springTheme('public')"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}#springTheme('archives')"/>
+		<title>心电</title>
+		<style type="text/css">
+             /*自定义datePicker的样式*/
+			   	.ui-widget-header{border: 1px solid #2F2F2F;}
+		</style>
+	</head>
+	<body>
+		<nav class="emng-flex">
+			<em></em>
+			<p>用户管理 -> 用户信息  -> <span>健康档案</span></p>
+		</nav>
+		<div id="main-section" class="emng-flex">
+			<section id="test-list">
+				<div class="menu-in-wrapper">
+					<ul>
+						<li class="menu-in-one"> 
+                            <div class="menu-in-header">
+                                <a href="exportData.htm?uid=$!{ecgDetailQueryForm.uid}">批量导出数据</a>
+                            </div>
+                        </li>
+						<li class="menu-in-one"> 
+                            <div class="menu-in-header">
+                                <a href="bpDetail.htm?uid=$!{ecgDetailQueryForm.uid}">血压</a>
+                            </div>
+                        </li>
+                        <li class="menu-in-one">
+                            <div class="menu-in-header">
+                                <a href="boDetail.htm?uid=$!{ecgDetailQueryForm.uid}">血氧</a>
+                            </div>
+                        </li>
+                        <li class="menu-in-one">
+                            <div class="menu-in-header">
+                                <a href="bmiDetail.htm?uid=$!{ecgDetailQueryForm.uid}">身高体重</a>
+                            </div>
+                        </li>
+                        <li class="menu-in-one">
+                            <div class="menu-in-header">
+                                <a href="tpDetail.htm?uid=$!{ecgDetailQueryForm.uid}">体温</a>
+                            </div>
+                        </li><li class="menu-in-one">
+                            <div class="menu-in-header">
+                                <a href="bciDetail.htm?uid=$!{ecgDetailQueryForm.uid}">人体成分</a>
+                            </div>
+                        </li>
+                        <li class="menu-in-one">
+                            <div class="menu-in-header active">
+                                <a href="ecgDetail.htm?uid=$!{ecgDetailQueryForm.uid}">心电</a>
+                            </div>
+                        </li>
+                        <li class="menu-in-one">
+                            <div class="menu-in-header">
+                                <a href="wlDetail.htm?uid=$!{ecgDetailQueryForm.uid}">腰围</a>
+                            </div>
+                        </li>
+                        <li class="menu-in-one">
+                            <div class="menu-in-header">
+                                <a href="uaDetail.htm?uid=$!{ecgDetailQueryForm.uid}">尿酸</a>
+                            </div>
+                        </li>
+                        <li class="menu-in-one">
+                            <div class="menu-in-header">
+                                <a href="cholDetail.htm?uid=$!{ecgDetailQueryForm.uid}">胆固醇</a>
+                            </div>
+                        </li>
+                        <li class="menu-in-one">
+                            <div class="menu-in-header">
+                                <a href="glDetail.htm?uid=$!{ecgDetailQueryForm.uid}">血糖</a>
+                            </div>
+                        </li>
+                        <li class="menu-in-one">
+                            <div class="menu-in-header">
+                                <a href="urineDetail.htm?uid=$!{ecgDetailQueryForm.uid}">尿液</a>
+                            </div>
+                        </li>
+					</ul>
+				</div>
+			</section>
+			<section id="test-content">
+				<div class="check-factor-wrapper">
+					<article>查找</article>
+					 <form name="ecgDetailQueryForm" id="ecgDetailQueryForm" method="post" action="ecgDetail.htm" >
+                       <input type="hidden" name="currentPage" #if(${ecgDetailQueryForm.currentPage}) value="${ecgDetailQueryForm.currentPage}" #else value="1" #end>
+                       <input type="hidden" name="uid" value="${ecgDetailQueryForm.uid}">
+                         <div class="check-factor-1 emng-flex">
+                            <ul class="emng-flex">
+                                <li class="date-wrap">
+                                    <span>开始时间:</span>
+                                    <input type="text" name="startDate" id="startDate" readonly="readonly" value="$!{ecgDetailQueryForm.startDate}"/>
+                                </li>
+                                <li class="date-wrap">
+                                    <span>结束时间:</span>
+                                    <input type="text" name="endDate" id="endDate" readonly="readonly" value="$!{ecgDetailQueryForm.endDate}"/>
+                                </li>
+                            </ul>
+                            <div class="check-search-wrapper emng-flex">
+                                <button class="emng-btn btn-bg-blue" type="submit">查找</button>
+                            </div>
+                        </div>
+                    </form>
+				</div>
+				<div class="pagebtn-wrapper emng-flex">
+					<div class="btn-wrap emng-flex"></div>
+					<div class="page-wrap">
+                       #showPageLable('ecgDetailQueryForm' $pageList)
+					</div>
+				</div>
+				<div class="tab-wrapper">
+					<table class="emng-table">
+						<thead>
+							<tr>
+								<th>测试时间</th>
+								<th>心电</th>
+							</tr>
+						</thead>
+						<tbody>
+						#foreach($item in $pageList.resultList)
+                            <tr>
+                            	<input type="hidden" class="ecg-value" value="$!{item.ecg}" />
+                                <td>$dateUtil.getNewFormatDateString($!{item.gmtTest})</td>
+                                <td class="ecg-status"></td>
+                            </tr>
+                         #end
+						</tbody>
+				    </table>
+				</div>
+		    </section>
+		</div>
+	</body>
+	<script src="${link.contextPath}/js/plugin/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+    <script src="${link.contextPath}/js/plugin/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="${link.contextPath}/js/plugin/datepickerChinese.js" type="text/javascript" charset="utf-8"></script>
+    <script src="${link.contextPath}/js/main/sta-area.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+    	$('.ecg-value').each(function(i,e){
+    		var ecg = $(e).val();
+    		//$('.ecg-status').eq(i).html('');
+    		switch (ecg){
+    			case '1':
+    			    $('.ecg-status').eq(i).html('节律无异常');
+    				break;
+    			case '2':
+    			    $('.ecg-status').eq(i).html('疑似心跳稍快，请注意休息');
+    				break;
+    			case '3':
+    			    $('.ecg-status').eq(i).html('疑似心跳过快，请注意休息');
+    				break;
+    			case '4':
+    			    $('.ecg-status').eq(i).html('疑似阵发性心跳过快，请咨询医生');
+    				break;
+    			case '5':
+    			    $('.ecg-status').eq(i).html('疑似心跳稍缓，请注意休息');
+    				break;
+    			case '6':
+    			    $('.ecg-status').eq(i).html('疑似心跳过缓，请注意休息');
+    				break;
+    			case '7':
+    			    $('.ecg-status').eq(i).html('疑似心跳间期缩短，请咨询医生');
+    				break;	
+    			case '8':
+    			    $('.ecg-status').eq(i).html('疑似心跳间期不规则，请咨询医生');
+    				break;
+    			case '9':
+    			    $('.ecg-status').eq(i).html('疑似心跳稍快伴有心跳间期缩短，请咨询医生');
+    				break;
+    			case '10':
+    			    $('.ecg-status').eq(i).html('疑似心跳稍缓伴有心跳间期缩短，请咨询医生');
+    				break;
+    			case '11':
+    			    $('.ecg-status').eq(i).html('疑似心跳稍缓伴有心跳间期不规则，请咨询医生');
+    				break;
+    			case '12':
+    			    $('.ecg-status').eq(i).html('波形有漂移');
+    				break;
+    			case '13':
+    			    $('.ecg-status').eq(i).html('疑似心跳过快伴有波形漂移，请咨询医生');
+    				break;
+    			case '14':
+    			    $('.ecg-status').eq(i).html('疑似心跳过缓伴有波形漂移，请咨询医生');
+    				break;
+    			case '15':
+    			    $('.ecg-status').eq(i).html('疑似心跳间期缩短伴有波形漂移，请咨询医生');
+    				break;
+    			case '16':
+    			    $('.ecg-status').eq(i).html('疑似心跳间期不规则伴有波形漂移，请咨询医生');
+    				break;	
+    			default:
+    				break;
+    		}
+    	});
+    </script>
+</html>

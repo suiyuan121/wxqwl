@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />	
+		<meta name="keywords" content="健康吧云管理平台" />
+		<meta name="description" content="健康吧,创享智慧健康生活" />
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/emng-1.0.0.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/public.css"/>
+		
+		<!--theme-->
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}#springTheme('emng')"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}#springTheme('public')"/>
+		<title>组织功能点管理</title>
+		<style type="text/css">
+		   .check-factor-wrapper, .pagebtn-wrapper, .tab-wrapper{width: 955px;}
+		   @media (min-width: 1280px) {
+	           .check-factor-wrapper,.pagebtn-wrapper,.tab-wrapper{width: 93%;}	    	
+            }
+			#orgName{width: 640px;}
+			.check-factor-wrapper .check-factor-2 li input[type=text]{width: 151px;}
+		</style>
+	</head>
+	<body>
+		<div class="check-factor-wrapper">
+				<article>查找</article>
+				    	<div class="check-factor-2 emng-flex">
+							<div class="line-two emng-flex">
+								<div class="dk-1 emng-flex">
+									<ul class="emng-flex">
+										<li>
+											<span>组织名称:</span>
+											<input type="text" name="orgName"  id="orgName" value="$!{org.name}" readonly="readonly" class="readyonly"/>
+										</li>
+								    </ul>
+								</div>
+								<form method="post" action="${link.contextPath}/orgPermQuery.htm" name="queryForm" id="queryForm">
+							    	<input type="hidden" name="currentPage" #if(${orgPermQueryForm.currentPage}) value="${orgPermQueryForm.currentPage}" #else value="1" #end>
+									<input type="hidden" name="orgId" value="$!{org.id}">	
+									<div class="dk-2 emng-flex">
+										<ul class="emng-flex">
+											<li>
+												<span>区域位置:</span>
+												#foreach($item in $locList)
+										          <input type="text" class="readyonly loc" readonly="readonly" data-value="$!{item.registerLoc}" value="$!{item.locName}" />
+						                        #end
+											</li>
+									    </ul>
+									</div>
+					            </form>
+						    </div>
+						</div>
+		</div>
+		<div class="pagebtn-wrapper emng-flex">
+			<div class="btn-wrap emng-flex">
+				#if(!$readonly)
+                    <a href="${link.contextPath}/orgPermMng.htm?orgId=$!{org.id}" class="emng-btn btn-bg-gray">管理功能点</a>
+				#end
+			</div>
+			<div class="page-wrap">
+				 #showPageLable('queryForm' $pageList)
+			</div>
+		</div>
+		<div class="tab-wrapper">
+			<table class="emng-table">
+				<thead>
+					<tr>
+						<th>功能编号</th>
+						<th>功能名称</th>
+						<th>备注</th>
+					</tr>
+				</thead>
+				<tbody>
+					#foreach($item in $pageList.resultList)
+						<tr>
+							<td>$!{item.id}</td>
+							<td>$!{item.name}</td>
+							<td>$!{item.name}</td>
+						</tr>		
+					#end
+				</tbody>
+		    </table>
+		</div>
+	</body>
+</html>

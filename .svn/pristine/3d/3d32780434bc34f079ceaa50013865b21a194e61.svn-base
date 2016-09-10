@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />	
+		<meta name="keywords" content="健康吧云管理平台" />
+		<meta name="description" content="健康吧,创享智慧健康生活" />
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/emng-1.0.0.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/public.css"/>
+		
+		<!--theme-->
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}#springTheme('emng')"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}#springTheme('public')"/>
+		<title>修改密码</title>
+		<style type="text/css">
+		    nav em{background-position: -60px 0;}
+		    #genderA,#gender{width: 692px;}
+			.emng-select,.emng-select select{width: 230px;}
+			.emng-select .emng-curselect{width: 195px;}
+			@media (min-width: 1000px) and (max-width: 1499px){
+		    	#genderA,#gender{width: 789px;}
+			    .emng-select,.emng-select select{width: 263px;}
+			    .emng-select .emng-curselect{width: 228px;}
+            }
+            @media (min-width: 1500px) and (max-width:1600px){
+	            #genderA{width: 989px;}
+			    .emng-select,.emng-select select{width: 329px;}
+			    .emng-select .emng-curselect{width: 294px;}
+            }
+            @media (min-width: 1620px) and (max-width:1800px){
+	           #genderA{width: 1289px;}
+			   .emng-select,.emng-select select{width: 429px;}
+			   .emng-select .emng-curselect{width: 394px;}
+            }
+		</style>
+	</head>
+	<body>
+		<nav class="emng-flex">
+			<em></em>
+			<p><span>修改密码</span></p>
+		</nav>
+		<div class="btn-area emng-flex">
+			<a href="${link.contextPath}/operMng.htm" class="emng-btn btn-bg-blue" id="go-back">返回</a>
+			<button class="emng-btn btn-bg-blue" id="go-submit" type="button">提交</button>
+		</div>
+		<div class="tab">
+			<form name="resetPwdForm" id="resetPwdForm" method="post" action="${link.contextPath}/resetPwd.htm">
+				<input type="hidden" name="msg" id="msg" value="$!{msg}" />
+				<ul>
+					<li>
+						<span>账号名:</span>
+						<input type="text" id="operatorName" name="operatorName"  value="#if(${operator.name}=="")${operator.operatorName}#else${operator.name}#end" disabled="disabled"/>
+					    <label class="error"></label>
+					</li>
+					<li>
+						<span><i class="must">*</i>原密码:</span>
+						<input type="password" id="oldPassword" name="oldPassword" maxlength="32"  placeholder="密码长度在6-32位之间"/>
+					    <label class="error"></label>
+					</li>
+					<li>
+						<span><i class="must">*</i>新密码:</span>
+						<input type="password" id="newPassword" name="newPassword" maxlength="32"  placeholder="密码长度在6-32位之间"/>
+					    <label class="error"></label>
+					</li>
+					<li>
+						<span><i class="must">*</i>确认密码:</span>
+						<input type="password" id="confirm-password" maxlength="32" placeholder="密码长度在6-32位之间"/>
+					    <label class="error"></label>
+					</li>
+				</ul>
+			</form>
+		</div>
+	</body>
+	<script src="${link.contextPath}/js/plugin/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${link.contextPath}/js/plugin/noty.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${link.contextPath}/js/plugin/vertifycate.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			notyMsg();
+		
+			$('#go-submit').click(function(){
+				if(!$('#oldPassword').validator({required:true,requiredMsg:'原密码不能为空',minLength:6,minMsg:'密码长度在6-32位之间'})
+				   ||!$('#newPassword').validator({errorTips:'密码不能有空格',required:true,requiredMsg:'新密码不能为空',forbiddenEqual:true,objEqual:$('#oldPassword'),equalMsg:'新密码不能和原密码相同',minLength:6,minMsg:'密码长度在6-32位之间',testType:'noSpace'}) 
+				   ||!$('#confirm-password').validator({errorTips:'密码不能有空格',required:true,requiredMsg:'确认密码不能为空',objEqual:$('#newPassword'),equalMsg:'两次密码输入不一致',testType:'noSpace'})){
+					return false;
+				}else{
+					$('#resetPwdForm').submit();
+				}
+			});
+			
+			$('#resetPwdForm').enterSub($('#go-submit'));
+			
+			$('#oldPassword').blur(function(){
+				$(this).validator({required:true,requiredMsg:'原密码不能为空',minLength:6,minMsg:'密码长度在6-32位之间'})
+			});
+			$('#newPassword').blur(function(){
+				$(this).validator({errorTips:'密码不能有空格',required:true,requiredMsg:'新密码不能为空',forbiddenEqual:true,objEqual:$('#oldPassword'),equalMsg:'新密码不能和原密码相同',minLength:6,minMsg:'密码长度在6-32位之间',testType:'noSpace'})
+			});
+			$('#confirm-password').blur(function(){
+				$(this).validator({errorTips:'密码不能有空格',required:true,requiredMsg:'确认密码不能为空',objEqual:$('#newPassword'),equalMsg:'两次密码输入不一致',testType:'noSpace'})
+			});
+			$('#confirm-password').focus(function(){
+				if($(this).val() != ''){
+					$(this).validator({objEqual:$('#newPassword'),equalMsg:'两次密码输入不一致'})
+				}
+			});
+		});
+		
+		function notyMsg(){
+			var msg = $('#msg').val();
+			if(msg != ""){
+				options = {'text':msg,'layout':'top'};
+				noty(options);
+				if(msg == '修改成功'){
+					setTimeout(function(){parent.location.href='${link.contextPath}/logout.htm'},2500);
+				}
+			}
+		}
+	</script>
+</html>

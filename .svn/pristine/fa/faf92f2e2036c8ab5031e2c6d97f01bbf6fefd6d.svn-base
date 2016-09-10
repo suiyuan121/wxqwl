@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration>
+<!-- scan 属性是修改后是不是自动重新加载 -->
+<configuration debug="false" scan="false" scanPeriod="30 seconds">
+	<!-- 引用资源 -->
+	<property resource="app.properties" />
+	<!-- 设置属性值，下文引用 -->
+	<property name="saved_days" value="7" />
+	<property name="system_name" value="ntu_jtxy_wx" />
+
+	<!-- ================================================== -->
+	<!-- =================属性定义================================= -->
+	<!-- 日志的级别属性值 -->
+	<property name="logging_level_info" value="info" />
+	<property name="logging_level_warn" value="warn" />
+
+	<!--默认的日志级别 logger.level = info -->
+	<property name="logging_level_default" value="${logger.level}" />
+	<!-- logger.debug.level = warn -->
+	<property name="logging_level_test" value="${logger.debug.level}" />
+
+	<!-- ================================================== -->
+	<!-- ================================================== -->
+
+	<property name="logging_default_pattern"
+		value="%d [%t] [%X{session_uid}@%X{req.remoteHost} %X{req.requestURI} %X{req.queryString}] %-5p %c [%F:%L-%M] - %m%n" />
+
+
+
+	<property name="logging_digest_pattern" value="%d - %m%n" />
+
+	<!-- %d 代表时间2006-10-20 14:06:49,812 %t 输出产生记录事件的线程名。 X{key} 输出与产生记录事件的线程相关联的MDC。 
+		%p 输出记录事件的级别。加“-”号是截取位数，可以让多个日志对齐，TRACE, DEBUG, INFO, WARN, ERROR, ALL 和 
+		OFF %c 输出源记录事件的logger名。 %F 输出执行记录请求的Java源文件的文件名。 %L 输出执行记录请求的行号。 %M 输出执行记录请求的方法名。 
+		%m 输出与记录事件相关联的应用程序提供的消息。 %n 输出与平台相关的行分隔符。 -->
+	<property name="logging_error_pattern"
+		value="%d [%t] [%X{session_uid}#%X{req.remoteHost}#%X{req.requestURI}] %-5p %c [%F:%L] - %m%n" />
+
+	<!-- ================================================== -->
+	<!-- ================================================== -->
+
+
+	<property name="log_file_path" value="${log.home}/${system_name}" />
+
+	<!-- 保存之前的日志文件格式 -->
+	<property name="file_post_fix" value=".%d{yyyy-MM-dd}.b" />
+
+	<property name="file_default" value="${log_file_path}/common-default.log" />
+	<property name="file_error" value="${log_file_path}/common-error.log" />
+
+	<property name="file_web_default" value="${log_file_path}/${system_name}-web.log" />
+
+	<property name="file_core_dao" value="${log_file_path}/${system_name}-core-dao.log" />
+
+	<property name="file_core_repository"
+		value="${log_file_path}/${system_name}-core-repository.log" />
+
+	<property name="file_task" value="${log_file_path}/${system_name}-task.log" />
+
+	<property name="file_biz_service"
+		value="${log_file_path}/${system_name}-biz-service.log" />
+
+
+	<!-- ================================================== -->
+	<!-- ================================================== -->
+
+	<!-- STDOUT 控制台输出 -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<!-- <Encoding>UTF-8</Encoding> -->
+		<withJansi>false</withJansi>
+		<encoder>
+			<pattern>${logging_default_pattern}</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<!-- DEFAULT -->
+	<appender name="DEFAULT"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!-- <Encoding>UTF-8</Encoding> -->
+		<file>${file_default}</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${file_default}${file_post_fix}</fileNamePattern>
+			<maxHistory>${saved_days}</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${logging_default_pattern}</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<!-- common-error -->
+	<appender name="COMMON-ERROR"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+			<level>ERROR</level>
+		</filter>
+		<file>${file_error}</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${file_error}${file_post_fix}</fileNamePattern>
+			<!-- <maxHistory>30</maxHistory> -->
+		</rollingPolicy>
+		<encoder>
+			<pattern>${logging_error_pattern}</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<!-- ================================================== -->
+	<!-- ================================================== -->
+
+	<appender name="JTXY-WEB-APPENDER"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!-- <Encoding>UTF-8</Encoding> -->
+		<file>${file_web_default}</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${file_web_default}${file_post_fix}
+			</fileNamePattern>
+			<maxHistory>${saved_days}</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${logging_default_pattern}</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<appender name="JTXY-CORE-DAO-APPENDER"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!-- <Encoding>UTF-8</Encoding> -->
+		<file>${file_core_dao}</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${file_core_dao}${file_post_fix}</fileNamePattern>
+			<maxHistory>${saved_days}</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${logging_default_pattern}</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<appender name="JTXY-CORE-REPOSITORY-APPENDER"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!-- <Encoding>UTF-8</Encoding> -->
+		<file>${file_core_repository}</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${file_core_repository}${file_post_fix}
+			</fileNamePattern>
+			<maxHistory>${saved_days}</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${logging_default_pattern}</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<appender name="JTXY-TASK-APPENDER"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!-- <Encoding>UTF-8</Encoding> -->
+		<file>${file_task}</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${file_task}${file_post_fix}</fileNamePattern>
+			<maxHistory>${saved_days}</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${logging_default_pattern}</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+
+	<appender name="JTXY-BIZ-SERVICE-APPENDER"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!-- <Encoding>UTF-8</Encoding> -->
+		<file>${file_biz_service}</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${file_biz_service}${file_post_fix}
+			</fileNamePattern>
+			<maxHistory>${saved_days}</maxHistory>
+		</rollingPolicy>
+		<encoder>
+			<pattern>${logging_default_pattern}</pattern>
+			<charset>UTF-8</charset>
+		</encoder>
+	</appender>
+	<!-- ================================================== -->
+	<!-- ================================================== -->
+
+	<!-- web层 -->
+	<logger name="cn.edu.ntu.jtxy.web" level="${logging_level_default}"
+		additivity="false">
+		<appender-ref ref="JTXY-WEB-APPENDER" />
+		<appender-ref ref="COMMON-ERROR" />
+		<if
+			condition='property("run.mode").contains("0") &amp;&amp; property("test.env").contains("dev")'>
+			<then>
+				<appender-ref ref="STDOUT" />
+			</then>
+		</if>
+	</logger>
+
+	<!-- dao -->
+	<logger name="cn.edu.ntu.jtxy.core.dao" level="${logging_level_default}"
+		additivity="false">
+		<appender-ref ref="JTXY-CORE-DAO-APPENDER" />
+		<appender-ref ref="COMMON-ERROR" />
+		<if
+			condition='property("run.mode").contains("0") &amp;&amp; property("test.env").contains("dev")'>
+			<then>
+				<appender-ref ref="STDOUT" />
+			</then>
+		</if>
+	</logger>
+
+	<!-- 仓储 -->
+	<logger name="cn.edu.ntu.jtxy.core.repository" level="${logging_level_default}"
+		additivity="false">
+		<appender-ref ref="JTXY-CORE-REPOSITORY-APPENDER" />
+		<appender-ref ref="COMMON-ERROR" />
+		<if
+			condition='property("run.mode").contains("0") &amp;&amp; property("test.env").contains("dev")'>
+			<then>
+				<appender-ref ref="STDOUT" />
+			</then>
+		</if>
+	</logger>
+
+	<!-- 定时任务 -->
+	<logger name="cn.edu.ntu.jtxy.task" level="${logging_level_default}"
+		additivity="false">
+		<appender-ref ref="JTXY-TASK-APPENDER" />
+		<appender-ref ref="COMMON-ERROR" />
+		<if
+			condition='property("run.mode").contains("0") &amp;&amp; property("test.env").contains("dev")'>
+			<then>
+				<appender-ref ref="STDOUT" />
+			</then>
+		</if>
+	</logger>
+
+	<!-- 服务 -->
+	<logger name="cn.edu.ntu.jtxy.biz.service" level="${logging_level_default}"
+		additivity="false">
+		<appender-ref ref="JTXY-BIZ-SERVICE-APPENDER" />
+		<appender-ref ref="COMMON-ERROR" />
+		<if
+			condition='property("run.mode").contains("0") &amp;&amp; property("test.env").contains("dev")'>
+			<then>
+				<appender-ref ref="STDOUT" />
+			</then>
+		</if>
+	</logger>
+	<!-- ================================================== -->
+	<!-- ================================================== -->
+
+
+	<!--默认日志输出 -->
+	<logger name="cn.edu.ntu.jtxy" level="${logging_level_default}"
+		additivity="false">
+		<appender-ref ref="DEFAULT" />
+		<appender-ref ref="COMMON-ERROR" />
+		<if
+			condition='property("run.mode").contains("0") &amp;&amp; property("test.env").contains("dev")'>
+			<then>
+				<appender-ref ref="STDOUT" />
+			</then>
+		</if>
+	</logger>
+
+
+	<!-- ================================================== -->
+	<!-- spring framework 包下的所有类的日志,默认日志输出 -->
+	<logger name="org.springframework" level="${logging_level_test}">
+	</logger>
+
+	<!-- spring web 默认日志输出 -->
+	<logger name="org.springframework.web" level="${logging_level_test}">
+	</logger>
+
+	<logger name="com.qq" level="${logging_level_test}" />
+	<logger name="org.apache.cxf" level="${logging_level_test}" />
+	<logger name="org.mybatis" level="${logger.sql.level}" />
+	<logger name="org.mybatis.spring.SqlSessionFactoryBean" level="${logging_level_test}" />
+	<!-- ================================================== -->
+
+	<!--和logger元素是一样的 ，只不过这个是根元素 default -->
+	<!-- &amp;是&的意思 -->
+	<root level="${logging_level_warn}">
+		<if
+			condition='property("run.mode").contains("0") &amp;&amp; property("test.env").contains("dev")'>
+			<then>
+				<appender-ref ref="STDOUT" />
+			</then>
+		</if>
+		<appender-ref ref="DEFAULT" />
+		<appender-ref ref="COMMON-ERROR" />
+	</root>
+
+</configuration>

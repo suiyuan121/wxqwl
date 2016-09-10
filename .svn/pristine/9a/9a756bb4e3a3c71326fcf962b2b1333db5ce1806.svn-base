@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>自定义等级</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+<link id="bs-css" href="${link.contextPath}/css/bootstrap-cerulean.css" rel="stylesheet">
+<!-- The fav icon -->
+<style type="text/css">
+        body,h1,h2,h3,h4,h5,h6,p,dl,dd,ul,ol,form,input,textarea,th,td,select{margin: 0;padding: 0;}
+		em{font-style: normal;}
+		li{list-style: none;}
+		a{text-decoration: none;}
+		img{border: none;vertical-align: top;}
+		table{border-collapse: collapse;}
+		input,textarea{outline: none;}
+		textarea{resize: none;overflow: auto;}
+		body{font-size: 12px;font-family: "microsoft yahei";}
+        
+		body {
+		    overflow-x: hidden;			
+		}	
+		
+		#top,#mid{width: 100%;}
+		#top{height: 50px; border-bottom: 1px solid #0099FF; padding: 0 0 0 40px; }
+		#top span{color: #00A3EE; font-size: 16px; font-weight: normal; height: 50px; line-height: 50px;}
+        
+        #mid{border-bottom: 1px solid #0099FF;}
+        #mid h2{font-size: 15px; color: #00A3EE; font-weight: normal; margin: 5px 0 20px 40px; font-family: "microsoft yahei";}
+        #mid .ul-wrapper{width: 90%; margin: 0 auto; overflow: hidden;}
+        #mid .ul-wrapper li{float: left; width: 33%; margin-bottom: 25px;}
+        #mid .ul-wrapper span{color: #00A3EE; font-size: 14px;}
+        #queryCard{width: 100px; font-family: "microsoft yahei";}
+        #page{text-align: right; padding-right: 60px; height: 50px; line-height: 50px;}
+        
+        #tab{position: relative;}
+        #tab #newCreate{display: inline-block; width: 80px; position: absolute; top: 15px; left: 80px;} 
+        #tab table td,#tab table th{text-align: center;}
+</style>
+</head>
+<body>
+	<div id="top">
+		<span>会员卡管理 -> 自定义等级</span> 
+	</div>
+	<div id="mid">
+		<h2>查询条件</h2>
+		<div class="ul-wrapper">
+			<form action="" method="get">
+				<ul>
+					<li>
+						<span>等级名称</span>
+						<input type="text" name="cardNum" id="cardNum" value=""  placeholder="请输入等级名称"/>
+					</li>
+					<li>
+						<input type="submit" class="btn btn-hg btn-primary" id="queryLevel" value="查询"/>
+					</li>
+				</ul>
+			</form>
+		</div>	  
+	</div>
+	<div id="tab">
+		<a href="vipNewcustom.html" class="btn btn-hg btn-primary" id="newCreate">新建</a>
+		<div id="page">
+			*此处显示页数
+		</div>
+		<table class="table table-striped table-bordered bootstrap-datatable datatable">
+			 <thead>
+			 	<tr>
+			 		<th>编号</th>
+			 		<th>等级名称</th>
+			 		<th>需要积分</th>
+			 		<th>有效日期</th>
+			 		<th>操作</th>
+			 		<th>删除</th>
+			 	</tr>
+			 </thead>
+			 <tbody>
+			 	<tr>
+			 		<td>1</td>
+			 		<td>白金套餐</td>
+			 		<td>1000</td>
+			 		<td>12个月</td>
+			 		<td><a class="btn btn-info"
+							href="vipEditcustom.html"> <i class="icon-edit icon-white"></i>
+								编辑
+						</a></td>
+			 		<td><a class="btn btn-info"
+							href="#">
+								删除
+						</a></td>
+			 	</tr>
+			 </tbody>
+		</table>
+	</div>
+</body>
+<script type="text/javascript" src="${link.contextPath}/js/jquery-1.7.2.min.js"></script>
+</html>

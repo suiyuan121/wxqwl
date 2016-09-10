@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />	
+		<meta name="keywords" content="健康吧云管理平台" />
+		<meta name="description" content="健康吧,创享智慧健康生活" />
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/emng-1.0.0.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/menu-list.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/public.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/jquery.mCustomScrollbar.min.css"/>
+		
+		<!--theme-->
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}#springTheme('emng')"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}#springTheme('menu')"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}#springTheme('public')"/>
+		<style type="text/css">
+		    body{overflow-y: hidden;}
+			nav em{background-position: -120px 0;}
+			#main-in-Frame{min-width: 1100px; height: auto;}
+			#main-in-menu{width: 170px; height: 480px;}
+			#iframe-container-2{flex: 1; -webkit-flex: 1;-moz-flex: 1;-ms-flex: 1; height: 470px;}
+			@media only screen and (min-width: 1650px) {
+		    	#main-in-menu{height: 960px;}
+		    	#iframe-container-2{height: 960px;}
+		    }
+		    /*设置滚动条的样式*/
+		   /* 1st scrollbar dragger style */
+		   .mCSB_inside .mCSB_container{margin-right: 0;}
+		   .mCSB_scrollTools{right: -6px;}
+		</style>
+		<title>组织信息管理</title>
+	</head>
+	<body>
+		<nav class="emng-flex">
+			<em></em>
+			<p>权限管理 -> <span>组织功能点管理</span></p>
+		</nav>
+		<div id="main-in-Frame" class="emng-flex">
+			<!--小菜单容器-->
+			<section id="main-in-menu">
+				<!--小菜单开始-->
+				<div class="menu-in-wrapper">
+					$!{webViewUtil.getOrganizationViewWithUrl(${list}, "${link.contextPath}/orgPermQuery.htm?orgId=")}
+				</div>
+			</section>
+			<section id="iframe-container-2">
+				<iframe  name="myTarget"  width="100%" height="100%" frameborder="0"></iframe>
+			</section>
+		</div>
+	</body>
+	<script src="${link.contextPath}/js/plugin/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${link.contextPath}/js/plugin/vertifycate.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${link.contextPath}/js/plugin/jquery-ui-1.10.4.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${link.contextPath}/js/plugin/jquery.mousewheel.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${link.contextPath}/js/plugin/jquery.mCustomScrollbar.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+			$(document).ready(function(){
+				var   a1 = $('.menu-in-header a');
+					    //点击效果
+					    a1.click(function(){
+					    	$('.menu-in-wrapper a').css('color','#2F2F2F');
+					    	$(this).css('color','#3DAAA6');
+					    });
+				    
+				    //设置自定义滚动条
+			        $('#main-in-menu').mCustomScrollbar({scrollInertia:50});   //设置惯性值,设置惯性值可以使滚动更平滑
+			        //限制小菜单字数内容显示
+			        $('.menu-in-wrapper a').each(function(i,e){
+			        	$(e).cutlongStr(6);
+			        });
+			});
+	</script>
+</html>

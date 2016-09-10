@@ -1,0 +1,24 @@
+package cn.edu.ntu.jtxy.core.repository.wx.impl;
+
+import cn.edu.ntu.jtxy.core.model.wx.AppConfig;
+import cn.edu.ntu.jtxy.core.repository.wx.WxAppConfigRepository;
+
+/**
+ * 
+ * @author {jin.zhang@witontek.com}
+ * @version $Id: WxAppConfigRepositoryImpl.java, v 0.1 2016年3月14日 下午4:25:27 {jin.zhang@witontek.com} Exp $
+ */
+public class WxAppConfigRepositoryImpl implements WxAppConfigRepository {
+
+    @Override
+    public AppConfig getDefault() {
+        AppConfig appConfig = new AppConfig();
+        appConfig.setToken("ntujtxywx");
+        appConfig.setAppId("wx152525e38936f96d");
+        appConfig.setAppSecret("e18811d929ddb03e366c54f1e00987a3");
+        appConfig.setAseKey("amQR9YRa0ieSmNLaXfzlWDdbluYr84NbacJx2WbwIVU");
+        appConfig.setServerUrl("http://www.ntujtxy.top/ntujtxy");
+        return appConfig;
+    }
+
+}

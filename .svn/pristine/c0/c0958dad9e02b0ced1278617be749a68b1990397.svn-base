@@ -1,0 +1,50 @@
+
+#if($_pageList) 
+    #set($_beginIndex = $_pageList.pageSize * (${_pageList.pageNum} - 1) + 1)
+    #set($_endIndex = $_pageList.pageSize * $_pageList.pageNum)
+    #if($_endIndex > $_pageList.totalCount)
+        #set($_endIndex = $_pageList.totalCount)
+    #end
+    
+    ##${_beginIndex}
+    ##${_endIndex}
+#end
+
+
+    #if($_pageList.totalCount && $_pageList.totalCount > 0)
+        <div class="emng-page">
+        #if($_pageList.pageNum > 1)
+            #set($_prePageNum = $_pageList.pageNum - 1)
+            <a href="javascript:gotoPage(1);" class="page-first">首页</a>
+            <a href="javascript:gotoPage($_prePageNum);" class="page-prev">上一页</a>
+        #end
+        
+        <span>
+        ${_beginIndex}-${_endIndex}条,共$!{_pageList.totalCount}条
+        <input type="hidden" id="list-count" value="$!{_pageList.totalCount}" />
+        </span>
+        
+        #if($_pageList.pageNum < $_pageList.maxPageNum)
+            #set($_nextPageNum = $_pageList.pageNum + 1)
+            <a href="javascript:gotoPage($_nextPageNum);" class="page-next">下一页</a>
+        #end 
+
+        #if($_pageList.pageNum != $_pageList.maxPageNum)
+            <a href="javascript:gotoPage($_pageList.maxPageNum);" class="page-last">尾页</a>
+        #end
+       </div>
+    #end
+    
+<script type="text/javascript">
+function gotoPage(pageNum){
+    var frm = document.$!_formName;
+    frm.currentPage.value = pageNum;
+    frm.submit();
+}
+
+function resetCurrentPage()
+{
+    var frm = document.$!_formName;
+    frm.currentPage.value = 1;
+}
+</script>

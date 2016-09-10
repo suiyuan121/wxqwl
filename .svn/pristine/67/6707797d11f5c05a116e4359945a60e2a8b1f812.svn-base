@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />	
+		<meta name="keywords" content="健康吧云管理平台" />
+		<meta name="description" content="健康吧,创享智慧健康生活" />
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/emng-1.0.0.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/public.css"/>
+		
+		<!--theme-->
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}#springTheme('emng')"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}#springTheme('public')"/>
+		<title>医生信息</title>
+		<style type="text/css">
+			nav em{background-position: -240px 0;}
+			.check-factor-wrapper .check-factor-1 li input[type=text]{width: 150px;}
+			.check-factor-wrapper .check-factor-1 li .emng-select{width: 150px;}
+			.check-factor-wrapper .check-factor-1 li .emng-select .emng-curselect{width: 150px;}
+			.check-factor-wrapper .check-factor-1 li .emng-select select{width: 150px;}
+		</style>
+	</head>
+	<body>
+		<nav class="emng-flex">
+			<em></em>
+			<p>医生管理 -> <span>医生信息</span></p>
+		</nav>
+		<div class="check-factor-wrapper">
+			<article>查找</article>
+			<form action="doctorDetail.htm" method="post" name="doctorQueryForm">
+			    <input type="hidden" id="currentPage" name="currentPage" #if(${doctorInfoQueryForm}) value="$!{doctorInfoQueryForm.currentPage}" #else value="1" #end />
+				<div class="check-factor-1 emng-flex">
+					<ul class="emng-flex">
+						<li>
+							<span>手机号码:</span>
+							<input type="text" name="pnum" id="pnum" class="Trim" value="$!{doctorInfoQueryForm.pnum}" maxlength="11" onchange="javascript:resetCurrentPage();"/>
+						</li>
+						<li>
+							<span>姓名:</span>
+							<input type="text" name="dname" id="dname" class="Trim" value="$!{doctorInfoQueryForm.dname}" onchange="javascript:resetCurrentPage();"/>
+						</li>
+						<li>
+							<span>状态:</span>
+							<a class="emng-select">
+							  <strong class="emng-curselect"></strong>
+							  <select onchange="change($(this),resetCurrentPage)" value="" name="dstatus" id="dstatus" class="loc">
+								  	<option value=""></option>
+				  					<option value="N" #if($stringUtil.equals($!{doctorInfoQueryForm.dstatus}, "N")) selected="selected" #end>未认证</option>
+				  					<option value="R" #if($stringUtil.equals($!{doctorInfoQueryForm.dstatus}, "R")) selected="selected" #end>驳回</option>
+				  					<option value="V" #if($stringUtil.equals($!{doctorInfoQueryForm.dstatus}, "V")) selected="selected" #end>已认证</option>
+				  					<option value="D" #if($stringUtil.equals($!{doctorInfoQueryForm.dstatus}, "D")) selected="selected" #end>失效</option>
+							  </select>
+							</a>
+						</li>
+					</ul>
+					<div class="check-search-wrapper emng-flex">
+					    <button class="emng-btn btn-bg-blue" id="doc-searchBtn" type="submit">查找</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="pagebtn-wrapper emng-flex">
+			<div class="btn-wrap emng-flex">
+				<a href="doctorAdd.htm" id="doc-buttonNew" class="emng-btn btn-bg-gray">新建</a>
+			</div>
+			<div class="page-wrap"> <!--此处显示页数-->
+				#showPageLable('doctorQueryForm' $pageList)
+			</div>
+		</div>
+		<div class="tab-wrapper">
+			<table class="emng-table">
+				<thead>
+					<tr>
+						<th>手机号码</th>
+						<th>姓名</th>
+						<th>职称</th>
+						<th>状态</th>
+						<th>所在医院</th>
+						<th>编辑</th>
+					</tr>
+				</thead>
+				<tbody>
+					#foreach($item in $pageList.resultList)
+						<tr>
+							<input type="hidden" name="uid" class="uid" value="$!{item.uid}" />
+							<td>$!{item.phoneNumber}</td>
+							<td>$!{item.name}</td>
+							<td>$!{item.titleName}</td>
+							<td name="itemStatus" class="itemStatus">$!{item.status}</td>
+							<td class="hosName">$!{item.hospitalName}</td>
+							<td>
+							  <a href="doctorEdit.htm?uid=$!{item.uid}&status=$!{item.status}" class="emng-editbtn"></a>
+							</td>
+						</tr>
+					#end
+				</tbody>
+		    </table>
+		</div>
+	</body>
+	<script src="${link.contextPath}/js/plugin/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${link.contextPath}/js/plugin/noty.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${link.contextPath}/js/plugin/vertifycate.min.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		function change(obj,fn){       //change()方法传入一个jQuery对象
+			var str = obj.find('option:selected').html();
+			obj.siblings('.emng-curselect').html(str);
+			fn && fn();
+        }
+	</script>
+    <script type="text/javascript">
+    	$(document).ready(function(){
+    		//刷新后保持select选值不变
+			$('.loc').each(function(i,e){
+		    	change($(e));
+		    });
+		    
+		    $('.hosName').each(function(i,e){
+		    	$(e).cutlongStr(15);
+		    });
+    	});
+    </script>
+</html>

@@ -1,0 +1,40 @@
+package cn.edu.ntu.jtxy.core.component.wx.MsgExecutor;
+
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import cn.edu.ntu.jtxy.core.component.wx.MsgExecutor.result.WxMsgResult;
+import cn.edu.ntu.jtxy.core.component.wx.impl.WxMsgComponentImpl.WxMsgTypeEnum;
+
+/**
+ * 
+ * @author {jin.zhang@witontek.com}
+ * @version $Id: WxDefaultMsgExecutor.java, v 0.1 2016年4月15日 上午11:21:53 {jin.zhang@witontek.com} Exp $
+ */
+public class WxDefaultMsgExecutor implements WxMsgExecutor {
+
+    private static final Logger logger = LoggerFactory.getLogger(WxDefaultMsgExecutor.class);
+
+    /** 
+     * @see cn.edu.ntu.jtxy.core.component.wx.MsgExecutor.WxMsgExecutor#process(java.util.Map)
+     */
+    @Override
+    public WxMsgResult process(Map<String, String> xmlParams) {
+        logger.info("微信图文消息处理器   xmlParams={} ", xmlParams);
+        WxMsgResult result = new WxMsgResult();
+        result.setWxMsgType(WxMsgTypeEnum.TEXT);
+        result.setContent("系统正在开发中....");
+        return result;
+    }
+
+    /** 
+     * @see cn.edu.ntu.jtxy.core.component.wx.MsgExecutor.WxMsgExecutor#getMsgType()
+     */
+    @Override
+    public WxMsgTypeEnum getMsgType() {
+        return WxMsgTypeEnum.TEXT;
+    }
+
+}

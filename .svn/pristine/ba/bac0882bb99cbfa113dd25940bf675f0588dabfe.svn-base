@@ -1,0 +1,32 @@
+#####################################
+## dev_mode db config
+#####################################
+#jdbc.driverClassName=org.postgresql.Driver
+#jdbc.url=jdbc:postgresql://58.240.244.130:5421/witon
+#jdbc.username=postgres
+#jdbc.password=postgres
+
+#jdbc.driverClassName=org.postgresql.Driver
+#jdbc.url=jdbc:postgresql://192.168.1.180:5432/witon
+#jdbc.username=postgres
+#jdbc.password=postgres
+
+#jdbc.driverClassName=org.postgresql.Driver
+#jdbc.url=jdbc:postgresql://121.40.154.101:5432/witon
+#jdbc.username=postgres
+#jdbc.password=P0stgreSql
+
+jdbc.driverClassName=com.microsoft.sqlserver.jdbc.SQLServerDriver
+jdbc.url=jdbc:sqlserver://210.29.65.230:1433;DatabaseName=wechatjt
+jdbc.username=jtxy
+jdbc.password=jtxy2016
+
+
+#####################################
+## mysql 
+#####################################
+mysql.jdbc.driverClassName=com.mysql.jdbc.Driver
+mysql.jdbc.url=jdbc:mysql://121.199.33.251:3306/thinkcmf?zeroDateTimeBehavior=convertToNull
+mysql.jdbc.username=rbjkb
+mysql.jdbc.password=www.rbjkb.com
+

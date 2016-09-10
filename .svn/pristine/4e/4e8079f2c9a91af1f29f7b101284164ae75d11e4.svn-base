@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.ntu.jtxy.core.dao.wx.WeiXinUserDao">
+
+	<resultMap id="RM" type="cn.edu.ntu.jtxy.core.model.wx.WeiXinUserDo">
+		<result property="id" column="id" />
+		<result property="appId" column="app_id" />
+		<result property="openId" column="open_id" />
+		<result property="nickName" column="nick_name" />
+		<result property="unionId" column="unionid" />
+		<result property="headImageUrl" column="head_image_url" />
+		<result property="props" column="props" />
+		<result property="createTime" column="create_time" />
+		<result property="modifyTime" column="modify_time" />
+	</resultMap>
+
+	<sql id="allColumns">
+		app_id,
+		open_id,
+		nick_name,
+		unionid,
+		head_image_url,
+		props,
+		modify_time,
+		create_time
+	</sql>
+
+	<insert id="insert" parameterType="cn.edu.ntu.jtxy.core.model.wx.WeiXinUserDo"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into jt_weixin_user (
+		<include refid="allColumns"></include>
+		) values(
+		#{appId},
+		#{openId},
+		#{nickName},
+		#{unionId},
+		#{headImageUrl},
+		#{props},
+		getdate(),
+		getdate()
+		)
+	</insert>
+
+	<select id="getByOpenId" resultMap="RM">
+		select top 1
+		<include refid="allColumns"></include>
+		from jt_weixin_user
+		where open_id=#{openId}
+	</select>
+
+
+</mapper>

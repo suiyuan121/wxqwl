@@ -1,0 +1,26 @@
+package cn.edu.ntu.jtxy.core.repository.wx;
+
+import cn.edu.ntu.jtxy.core.model.wx.WeiXinUserDo;
+
+/**
+ * 
+ * @author {jin.zhang@witontek.com}
+ * @version $Id: WeiXinUserRepository.java, v 0.1 2016年3月30日 下午1:39:25 {jin.zhang@witontek.com} Exp $
+ */
+public interface WeiXinUserRepository {
+
+    /**
+     * 
+     * @param openId
+     * @return
+     */
+    WeiXinUserDo getByOpenId(String openId);
+
+    /**
+     * 
+     * @param weiXinUserDo
+     * @return
+     */
+    long add(WeiXinUserDo weiXinUserDo);
+
+}

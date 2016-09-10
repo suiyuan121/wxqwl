@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.ntu.jtxy.core.dao.wx.RefreshTokenDao">
+
+	<resultMap id="RM" type="cn.edu.ntu.jtxy.core.model.wx.RefreshTokenDo">
+		<result property="id" column="id" />
+		<result property="appId" column="app_id" />
+		<result property="accessToken" column="access_token" />
+		<result property="createTime" column="create_time" />
+		<result property="modifyTime" column="modify_time" />
+		<result property="effectTime" column="effect_time" />
+		<result property="expireTime" column="expire_time" />
+	</resultMap>
+
+	<sql id="allColumnsForInsert">
+		app_id,
+		access_token,
+		create_time,
+		modify_time,
+		effect_time,
+		expire_time
+	</sql>
+
+	<sql id="allColumnsForSelect">
+		id,
+		app_id,
+		access_token,
+		create_time,
+		modify_time,
+		effect_time,
+		expire_time
+	</sql>
+
+	<insert id="add" parameterType="cn.edu.ntu.jtxy.core.model.wx.RefreshTokenDo"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into jt_access_token (
+		<include refid="allColumnsForInsert"></include>
+		) values
+		(#{appId},
+		#{accessToken},
+		getdate(),
+		getdate(),
+		#{effectTime},
+		#{expireTime})
+	</insert>
+
+	<select id="getByCond" parameterType="java.util.HashMap"
+		resultMap="RM">
+		select
+		<include refid="allColumnsForSelect"></include>
+		from jt_access_token
+		where app_id = #{appId} and
+		<if test="expireTime!=null">
+			expire_time>#{expireTime}
+		</if>
+		<if test="expireTime==null ">
+			expire_time >getdate()
+		</if>
+		order by expire_time desc
+	</select>
+
+	<select id="getLastRecord" resultMap="RM">
+		select top 1
+		<include refid="allColumnsForSelect"></include>
+		from jt_access_token
+		where app_id = #{appId}
+		order by effect_time desc
+	</select>
+
+</mapper>

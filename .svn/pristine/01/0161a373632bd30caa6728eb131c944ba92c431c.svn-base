@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />	
+		<meta name="keywords" content="健康吧云管理平台" />
+		<meta name="description" content="健康吧,创享智慧健康生活" />
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/emng-1.0.0.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/public.css"/>
+		
+		<!--theme-->
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}#springTheme('emng')"/>
+		<title>组织信息管理</title>
+		<style type="text/css">
+			#addLower,#addEqual{width: 120px;}
+			#go-back,#go-submit{width: 80px;}
+			.emng-select,.emng-select select{width: 171px;}
+			/*#rmkLi{align-items: flex-start;}
+			#rmk{width: 680px;}*/
+			#imgwrap{width: 350px; height: 130px; border: 1px solid #E0E0E0;}
+			#imgwrap img{width: 100%; height: 100%;}
+			#textfield{width: 412px;}
+			.file-box{position: relative;}
+			#fileField{position: absolute; width: 510px; height: 30px; opacity: 0; /*filter:alpha(opacity:0);*/ top: 0; left: 0; cursor: pointer;}
+			#view,#checkexample,#deletelogo{height: 30px; line-height: 35px; margin-left: 5px;}
+		    
+		    @media (max-width: 999px) {
+		    	.btn-area{margin: 20px 0 0 10px;}
+		    }
+		</style>
+	</head>
+	<body>
+		<div class="btn-area emng-flex">
+			#if(!${init})
+			  <a class="emng-btn btn-bg-blue" id="go-back" #if(${organization.id}) href="${link.contextPath}/orgdetail.htm?type=get&id=$!{organization.id}" #end>返回</a>
+			#end  
+			<button class="emng-btn btn-bg-blue" id="go-submit" type="button">提交</button>
+		</div>
+		<div class="tab">
+			<form  method="post" action="${link.contextPath}/addNeworg.htm" name="form0" id="formOrg">
+				 <ul>
+					<li>
+						<span><i class="must">*</i>组织名称:</span>
+						<input type="text" id="orgname" name="orgname" maxlength="50" placeholder="50个字之内 请勿输入空格等特殊字符"/>
+					    <label class="error"></label>
+					</li>
+					<li>
+						<span>上级组织:</span>
+						<input type="text" id="uporg" name="uporg" maxlength="50" class="readyonly" readonly="readonly"  value="$!organization.fullName"/>
+					    <input type="hidden" id="parentId" name="parentId" value="$!organization.id"/>
+					    <label class="error"></label>
+					</li>
+					<li>
+						<span>责任人:</span>
+						<input type="text" id="dutyman" name="dutyman" maxlength="10" placeholder="10个字之内 请勿输入空格等特殊字符"/>
+					    <label class="error"></label>
+					</li>
+					<li>
+						<span>联系电话:</span>
+						<input type="text" id="contactphone" name="contactphone" maxlength="32" />
+					    <label class="error"></label>
+					</li>
+					<li>
+						<span>区域位置:</span>
+						<input type="hidden" name="LocId" id="LocId" #if($!organization.locId) value="$!organization.locId" #else value="12" #end />
+				        $!{webViewUtil.getLocListView(${map},${subLoc},${locLevel},99,${organization})}
+				        <label class="error"></label>
+					</li>
+					<li id="rmkLi">
+						<span>备注:</span>
+						<input type="text" id="rmk" name="rmk" maxlength="200" value="" placeholder="限制只能输入200字之内"/>
+					    <label class="error"></label>
+					</li>
+					##if( !$organization)
+						<li>
+							<span>LOGO上传:</span>
+							<div class="file-box emng-flex">
+								 <input type="hidden" name="logoUrl" id="logoUrl" value="" />
+								 <input type="hidden" name="logoTempUrl" id="logoTempUrl" value="" />
+								 <input type="text" id="textfield" name="textfield" maxlength="50" />
+								 <button class="emng-btn btn-bg-blue" id="view" type="button">浏览...</button>
+								 <input type="file" name="logo"  id="fileField" size="28" accept="image/x-png" onchange="showPath(this)"/> 
+							</div>
+							<a href="${link.contextPath}/orgLogo.htm" target="_blank" class="emng-btn btn-bg-gray" id="checkexample">查看例子</a>
+							<button class="emng-btn btn-bg-gray" id="deletelogo" class="emng-btn btn-bg-blue" type="button">删除</button>
+						</li>
+					##end	
+					<li>
+						<span></span>
+						<div id="imgwrap" style="display: none;">
+							<img id="upLoadImg" src=""/>
+						</div>
+					</li>
+					<li>
+						<span>设备登录名:</span>
+						<input type="text" id="deviceLoginName" name="deviceLoginName" class="readyonly" readonly="readonly" />
+					</li>
+					<li>
+						<span>密码:</span>
+						<input type="text" id="devicePwd" name="devicePwd" class="readyonly" readonly="readonly" />
+					</li>
+					#if( !$organization)
+						<li>
+							<span>AppID:</span>
+							<input type="text" id="appId" name="appId" class="readyonly" readonly="readonly" />
+						</li>
+						<li>
+							<span>AppSecret:</span>
+							<input type="text" id="appSecret" name="appSecret" class="readyonly" readonly="readonly" />
+						</li>
+					#end	
+					<li>
+						<span>试用组织:</span>
+						<label class="emng-checkbox-wrap">
+							<input type="checkbox" class="emng-checkbox emng-checkbox-item" name="isTrial" value="Y" id="isTrial" />
+							<b></b>
+						</label>
+					    <i class="must">(试用组织为该组织还未与我公司签订合同)</i>
+					</li>
+					<li>
+						<span>有效:</span>
+						<label class="emng-checkbox-wrap">
+							<input type="checkbox" class="emng-checkbox emng-checkbox-item" name="ifValid" id="ifValid" value="E" checked="checked" />
+							<b></b>
+						</label>
+					</li>
+				</ul>
+			</form>
+			<label id="submitReturn" style="display: none;">$!{msg}</label>
+		</div>
+	</body>
+	<script src="${link.contextPath}/js/plugin/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${link.contextPath}/js/plugin/vertifycate.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${link.contextPath}/js/main/org-infoMng.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${link.contextPath}/js/plugin/noty.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${link.contextPath}/js/plugin/ajaxfileupload.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+	    $(document).ready(function(){
+	    	$('#go-submit').click(function(){
+				if(!$('#orgname').validator({errorTips:'请勿输入特殊字符',required:true,requiredMsg:'组织名称不能为空',testType:'sPecial'})
+				   || !$('#dutyman').validator({errorTips:'请勿输入特殊字符',testType:'sPecial'})
+				   || !$('#contactphone').validator({errorTips:'请输入正确的电话',testType:'onlyNum'})){
+					     return false;
+				}else{
+					$('#formOrg').submit();
+				}
+			});
+			
+			//回车提交表单
+			$('#formOrg').enterSub($('#go-submit'));
+			
+			$('#orgname').blur(function(){$(this).validator({errorTips:'请勿输入特殊字符',required:true,requiredMsg:'组织名称不能为空',testType:'sPecial'});});
+			$('#dutyman').blur(function(){$(this).validator({errorTips:'请勿输入特殊字符',testType:'sPecial'});});
+	        $('#contactphone').blur(function(){$(this).validator({errorTips:'请输入正确的电话',testType:'onlyNum'});});
+	      
+	      window.onload = function(){
+	      	  var Msg = $('#submitReturn').html(),
+	      	      opt = null; 
+	      	      if(Msg == '新增成功'){
+	      	      	 opt = {'text':'组织信息新增成功'};
+	      	      	 noty(opt);
+	      	      }else if(Msg != '' && Msg != '新增成功'){
+	      	      	 opt = {'text':Msg};
+	      	      	 noty(opt);
+	      	      };
+	        };
+	        
+	    });
+	    
+	    function showPath(obj){
+ 	        var path = obj.value;
+ 	        var FileSize = obj.files[0].size/1024;
+   	    	path = path.substring(path.lastIndexOf("\\")+1,path.length);
+   	        $('#textfield').val(path);
+   	        
+   	        if(FileSize>2048){
+	   	         var options = {'text':'图片大小不能超过2M'};
+	   	         $("#textfield").val('');
+	   	         noty(options);	
+	   	     }else{
+	   	     	 $.ajaxFileUpload({
+			        //处理文件上传操作的服务器端地址(可以传参数,已亲测可用)
+			        url:'${link.contextPath}/orgLogo.htm',
+			        secureuri:false,                       //是否启用安全提交,默认为false
+			        fileElementId:'fileField',           //文件选择框的id属性
+			        dataType:'text',                       //服务器返回的格式,可以是json或xml等
+			        success:function(data, status){        //服务器响应成功时的处理函数
+			        	var json = JSON.parse(data.replace(/<pre.*>(.*)<\/pre>.*$/i,"$1"));
+			        	var options = null;
+			        	if(json.success){
+			        		var oImg = document.createElement("img");
+			        		oImg.src = json.path;
+			        		oImg.onload = function(){
+			        			if(this.width != 350 || this.height !=130 ){
+			        				options = {"text":"图片尺寸应为350*130"};
+			        				$("#textfield").val('');
+			        				noty(options);
+			        			}else{
+			        				$("#upLoadImg").attr("src", json.path);
+					        		$("#imgwrap").slideDown(600);
+					        		$("#logoUrl").val(json.logoUrl);
+					        		$("#logoTempUrl").val(json.path);
+			        			}
+			        		}
+			        	}else{
+			        		options = {"text":json.resultMsg}
+			        	    noty(options);
+			        	}
+			        },
+			        error:function(data, status, e){ //服务器响应失败时的处理函数
+			            var options = {"text":"图片上传失败,服务器无相应"};
+			            noty(options);
+			        }
+			    });
+	   	     }
+   	   };
+   	   
+   	   $("#deletelogo").click(function(){
+   	  	 $("#textfield").val('');
+   	  	 $("#upLoadImg").attr('src','');
+   	  	 $('#imgwrap').slideUp(600);
+   	  	 $("#logoUrl").val('');
+		 $("#logoTempUrl").val('');
+   	  });
+	</script>
+</html>

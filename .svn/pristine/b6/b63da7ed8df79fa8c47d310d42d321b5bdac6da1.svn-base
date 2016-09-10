@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd"
+	default-autowire="byName">
+
+	<!-- org.springframework.scheduling.quartz.SchedulerFactoryBean -->
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="dataSource">
+			<null />
+		</property>
+		<property name="triggers">
+			<list>
+				<ref bean="wxAccessTokenRefreshTaskCronTrigger" />
+			</list>
+		</property>
+		<property name="taskExecutor" ref="executorForTask" />
+	</bean>
+
+	<!-- ====================================================================== -->
+	<!-- ====================================================================== -->
+	<!-- ====================================================================== -->
+
+	<!-- 线程执行器配置，用于任务注册 -->
+	<bean id="executorForTask"
+		class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+		<property name="corePoolSize" value="5" />
+		<property name="maxPoolSize" value="5" />
+		<property name="queueCapacity" value="128" />
+	</bean>
+
+
+	<bean id="wxAccessTokenRefreshTaskCronTrigger"
+		class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail" ref="wxAccessTokenRefreshTaskJob" />
+		<!-- 每1小时执行一次 -->
+		<property name="cronExpression" value="20 0/1 * * * ?" />
+
+	</bean>
+
+	<bean id="wxAccessTokenRefreshTaskJob"
+		class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject" ref="wxAccessTokenRefreshTask" />
+		<property name="targetMethod" value="execute" />
+		<property name="concurrent" value="false" />
+	</bean>
+
+	<bean id="wxAccessTokenRefreshTask" class="cn.edu.ntu.jtxy.task.wx.WxAccessTokenRefreshTask"></bean>
+
+</beans>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			html,body{width: 100%; overflow-x: hidden; text-align: center;}
+			.eg-1{width: 350px; margin: 30px auto;}
+			.eg-2{width: 750px; margin: 20px auto;}
+			.eg-2 img{max-width: 750px;}
+		</style>
+	</head>
+	<body>
+		<h2>建议上传的图片:长350px 高 130px 图片为PNG格式，背景透明，不大于2M</h2>
+		<div class="eg-1">
+			<img src="${link.contextPath}/img/example1.png"/>
+		</div>
+		<h2>下图为您上传的logo在健康助手界面中的位置</h2>
+		<div class="eg-2">
+			<img src="${link.contextPath}/img/example2.png"/>
+		</div>
+	</body>
+</html>

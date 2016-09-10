@@ -1,0 +1,25 @@
+package cn.edu.ntu.jtxy.core.repository.wx;
+
+import cn.edu.ntu.jtxy.core.model.wx.StudentInfoDo;
+
+/**
+ * 
+ * @author {jin.zhang@witontek.com}
+ * @version $Id: StudentInfoRepository.java, v 0.1 2016年4月13日 下午1:37:38 {jin.zhang@witontek.com} Exp $
+ */
+public interface StudentInfoRepository {
+
+    /**
+     * 
+     * @param studentInfoDo
+     * @return
+     */
+    public long add(StudentInfoDo studentInfoDo);
+
+    /**
+     * 
+     * @param stuNo
+     * @return
+     */
+    public StudentInfoDo getByStuNo(String stuNo);
+}

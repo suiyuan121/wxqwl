@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.wxqwl.zj.core.dao.UserInfoDao">
+
+	<resultMap id="RM" type="cn.wxqwl.zj.core.model.UserInfoDo">
+		<result property="uid" column="uid" />
+		<result property="userType" column="user_type" />
+		<result property="logonName" column="logon_name" />
+		<result property="phone" column="phone" />
+		<result property="email" column="email" />
+		<result property="headImage" column="head_image" />
+		<result property="status" column="status" />
+		<result property="pwdSalt" column="pwd_salt" />
+		<result property="pwdHash" column="pwd_hash" />
+		<result property="location" column="location" />
+		<result property="gmtCreate" column="gmt_create" />
+		<result property="gmtModify" column="gmt_modify" />
+	</resultMap>
+
+
+	<sql id="allColumns">
+		uid,
+		user_type,
+		logon_name,
+		phone,
+		email,
+		head_image,
+		status,
+		pwd_salt,
+		pwd_hash,
+		location,
+		gmt_create,
+		gmt_modify
+	</sql>
+
+	<insert id="add" parameterType="cn.wxqwl.zj.core.model.UserInfoDo">
+		insert into user_info (
+		<include refid="allColumns"></include>
+		) values(
+		#{uid},
+		#{userType},
+		#{logonName},
+		#{phone},
+		#{email},
+		#{headImage},
+		#{status},
+		#{pwdSalt},
+		#{pwdHash},
+		#{location},
+		now(),
+		now()
+		)
+	</insert>
+
+	<select id="getSeq" resultType="long">
+		select nextval('seq_uid')
+	</select>
+
+	<select id="getByCond" parameterType="java.util.HashMap"
+		resultMap="RM">
+		select
+		<include refid="allColumns"></include>
+		from user_info
+		where 1=1
+		<if test="logonName!=null and logonName!=''">
+			and logon_name=#{logonName}
+		</if>
+		<if test="userType!=null and userType!=''">
+			and user_type=#{userType}
+		</if>
+		<if test="status!=null and status!=''">
+			and status=#{status}
+		</if>
+	</select>
+
+
+</mapper>

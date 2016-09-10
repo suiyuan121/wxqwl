@@ -1,0 +1,20 @@
+package cn.edu.ntu.jtxy.core.dao.wx;
+
+import cn.edu.ntu.jtxy.core.model.wx.StudentInfoDo;
+
+public interface StudentInfoDao {
+
+    /**
+     * 
+     * @param studentInfoDo
+     * @return
+     */
+    public long add(StudentInfoDo studentInfoDo);
+
+    /**
+     * 
+     * @param stuNo
+     * @return
+     */
+    public StudentInfoDo getByStuNo(String stuNo);
+}

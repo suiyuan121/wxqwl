@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+
+	<display-name>EhealthManage</display-name>
+
+	<context-param>
+		<param-name>contextClass</param-name>
+		<param-value>org.springframework.web.context.support.XmlWebApplicationContext</param-value>
+	</context-param>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:/META-INF/spring/ehM-*.xml</param-value>
+	</context-param>
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<!-- ============================================== -->
+	<!-- ============================================== -->
+	<!-- ============================================== -->
+
+	<filter>
+		<filter-name>Character Encoding</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>UTF-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>Character Encoding</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>MDCInsertingServletFilter</filter-name>
+		<filter-class>ch.qos.logback.classic.helpers.MDCInsertingServletFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>MDCInsertingServletFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+
+	<filter>
+		<filter-name>SessionFilter</filter-name>
+		<filter-class>com.witon.ehealthMng.web.filter.SessionFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>SessionFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+
+	<filter>
+		<filter-name>PagePerfFilter</filter-name>
+		<filter-class>com.witon.ehealthMng.web.filter.PagePerfFilter</filter-class>
+		<init-param>
+			<param-name>reg</param-name>
+			<param-value>*.htm;*.json</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>PagePerfFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- ============================================== -->
+	<!-- ============================================== -->
+	<!-- ============================================== -->
+
+	<filter>
+		<filter-name>ThemeFilter</filter-name>
+		<filter-class>com.witon.ehealthMng.web.filter.ThemeFilter</filter-class>
+		<init-param>
+			<param-name>reg</param-name>
+			<param-value>*.htm;*.html</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>ThemeFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- ============================================== -->
+	<!-- ============================================== -->
+	<!-- ============================================== -->
+
+	<filter>
+		<filter-name>AutoLogonFilter</filter-name>
+		<filter-class>com.witon.ehealthMng.web.filter.AutoLogonFilter</filter-class>
+		<init-param>
+			<param-name>path</param-name>
+			<param-value>classpath:/META-INF/security/default.acf</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>AutoLogonFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- ============================================== -->
+	<!-- ============================================== -->
+	<!-- ============================================== -->
+
+	<!-- spring处理器 -->
+	<servlet>
+		<servlet-name>SpringDispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:/META-INF/spring/mvc/ehM-web-mvc.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SpringDispatcher</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+
+
+	<!-- cxf web service -->
+	<servlet>
+		<description>Apache CXF Endpoint</description>
+		<display-name>cxf</display-name>
+		<servlet-name>cxf</servlet-name>
+		<servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>cxf</servlet-name>
+		<url-pattern>/services/*</url-pattern>
+	</servlet-mapping>
+
+
+
+	<session-config>
+		<session-timeout>30</session-timeout>
+	</session-config>
+
+	<error-page>
+		<error-code>400</error-code>
+		<location>/error.htm</location>
+	</error-page>
+	<error-page>
+		<error-code>401</error-code>
+		<location>/error.htm</location>
+	</error-page>
+	<error-page>
+		<error-code>403</error-code>
+		<location>/error.htm</location>
+	</error-page>
+	<error-page>
+		<error-code>404</error-code>
+		<location>/notfound.htm</location>
+	</error-page>
+	<error-page>
+		<error-code>405</error-code>
+		<location>/error.htm</location>
+	</error-page>
+	<error-page>
+		<error-code>407</error-code>
+		<location>/error.htm</location>
+	</error-page>
+	<error-page>
+		<error-code>408</error-code>
+		<location>/error.htm</location>
+	</error-page>
+	<error-page>
+		<error-code>414</error-code>
+		<location>/error.htm</location>
+	</error-page>
+	<error-page>
+		<error-code>415</error-code>
+		<location>/error.htm</location>
+	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/error.htm</location>
+	</error-page>
+	<error-page>
+		<error-code>501</error-code>
+		<location>/error.htm</location>
+	</error-page>
+	<error-page>
+		<error-code>503</error-code>
+		<location>/error.htm</location>
+	</error-page>
+</web-app>

@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />	
+		<meta name="keywords" content="健康吧云管理平台" />
+		<meta name="description" content="健康吧,创享智慧健康生活" />
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/emng-1.0.0.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/public.css"/>
+		
+		<!--theme-->
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}#springTheme('emng')"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}#springTheme('public')"/>
+		<title>短信平台</title>
+		<style type="text/css">
+			nav em{background-position: -300px 2px;}
+		    .check-factor-wrapper .check-factor-1 li .emng-select,.check-factor-wrapper .check-factor-1 li .emng-select select{width: 200px;margin-left: 10px;}
+			.check-factor-wrapper .check-factor-1 li .emng-select .emng-curselect{width: 168px;}
+		</style>
+	</head>
+	<body>
+		<nav class="emng-flex">
+			<em></em>
+			<p>短信平台 -> <span>发送短信</span></p>
+		</nav>
+		<div class="check-factor-wrapper">
+			<article>查找</article>
+			<form name="queryForm" id="queryForm" action="${link.contextPath}/msgAdd.htm" method="post"> 
+				 <input type="hidden" id="orgId" name="orgId" #if(!${queryForm.orgId}) value="$!{operator.orgId}" #else value="$!{queryForm.orgId}" #end  onChange="javascript:resetCurrentPage();"/>		     
+				 <div class="check-factor-1 emng-flex">
+					<ul class="emng-flex">
+						<li>
+							<span>组织名称:</span>
+							#if(${operator.org}) 
+							 <a class="emng-select">
+							 	<strong class="emng-curselect disabled">$!{operator.org.fullName}</strong>
+							    <select name="orgOne" class="loc" id="loc_default" disabled="disabled" title="$!{operator.org.fullName}">
+									<option value="$!{operator.orgId}" selected="selected">$!{operator.org.fullName}</option>
+								</select> 
+							 </a>
+							#else 
+							<a class="emng-select">
+							   <strong class="emng-curselect"></strong>
+							   <select class="loc" id="dis0" onchange="changeLinkage(id)">
+							   	   <option value=""></option>
+							   	   #foreach($item in $subOrg)
+								   <option value="${item.id}" >${item.name}</option> 
+								   #end
+							   </select>
+							</a>
+							#end
+						</li>
+					</ul>
+					<div class="check-search-wrapper emng-flex">
+					    <button class="emng-btn btn-bg-blue" type="submit" id="add">添加</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		<form id="orgMsgQueryForm" name="orgMsgQueryForm" method="post" action="${link.contextPath}/msgMng.htm">
+			<input type="hidden" name="currentPage" id="currentPage" #if(${orgMsgQueryForm.currentPage}) value="${orgMsgQueryForm.currentPage}"#else value="1" #end />
+		</form>
+		<div class="pagebtn-wrapper emng-flex">
+			<div class="btn-wrap emng-flex">
+				<button class="emng-btn btn-bg-gray" id="buttonRemove">删除</button>
+			</div>
+			<div class="page-wrap">
+				#showPageLable('orgMsgQueryForm' $pageList)
+			</div>
+		</div>
+		#if($msg)
+		    <label style="display: none;" id="submitReturn">$!{msg}</label>
+		#end    
+		<div class="tab-wrapper">
+			<table class="emng-table">
+				<thead>
+					<tr>
+						<th>
+							<label class="emng-checkbox-wrap">
+								<input type="checkbox" class="emng-checkbox emng-checkbox-all" name="check-all" id="check-all" value="" />
+								<b></b>
+							</label>全选
+						</th>
+						<th>组织名称</th>
+					</tr>
+				</thead>
+				<tbody>
+					#if($pageList && $pageList.resultList)
+						#foreach($item in $pageList.resultList)
+	                        <tr>
+								<td>
+									<label class="emng-checkbox-wrap">
+										<input type="checkbox" class="emng-checkbox emng-checkbox-item" name="chkSon" value="" />
+										<b></b>
+										<input type="hidden" class="itemUid" name="orgMsgStatusViewId" value="${item.id}"/>
+									</label>
+								</td>
+								<td>${item.orgName}</td>
+				            </tr>
+                        #end
+					#end		
+				</tbody>
+		    </table>
+		</div>
+	</body>
+	<script src="${link.contextPath}/js/plugin/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${link.contextPath}/js/plugin/vertifycate.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${link.contextPath}/js/plugin/select-changes.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${link.contextPath}/js/plugin/Widget.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${link.contextPath}/js/plugin/Window.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${link.contextPath}/js/plugin/noty.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			//不能添加空组织
+			$('#add').click(function(){
+				if($('#dis0').val() == ''){
+					var opt = {'text':'不能添加空组织!','layout':'top'};
+					noty(opt);
+					return false;
+				}else{
+					$('#queryForm').submit();
+				}
+			});
+			
+			//全选
+			$('#check-all').checkAll($('input[name=chkSon]'));
+			
+			//删除
+			$('#buttonRemove').click(function(){
+				var checkItem = $('input[name=chkSon]').filter(':checked'),
+				    checkedLength = checkItem.length,
+				    str = '',
+				    options=null;
+				if(checkedLength == 0){
+					var win = new Window().alert({content:'请先选择要删除的组织!'});
+				}else{
+					var win2 = new Window().confirm({
+						content:'您确定要删除吗?',
+						handler4ConfirmBtn:function(){
+							checkItem.each(function(i,e){
+							   str+=$(e).siblings('.itemUid').val()+',';
+						    });
+						    $.post('${link.contextPath}/message/del.json',{delIds:str},function(data){
+						    	if(data.success){
+						    		checkItem.parents('tr').fadeOut(500,function(){
+						    			$(this).remove();
+						    		});
+						    		options = {'text':'删除成功','layout':'top'};
+						    		noty(options);
+						    		setTimeout(function(){
+						    			window.location.href='${link.contextPath}/msgMng.htm';
+						    		},2300)
+						    	}else{
+					    		    options = {'text':'删除失败','layout':'top'};
+					    		    noty(options);
+						    	}
+						    });
+						}
+					});
+				}
+			});
+			
+			window.onload = function(){
+				if($('#submitReturn').length != 0){
+					var Msg = $('#submitReturn').html();
+					if(Msg != ''){
+						var opt = {'text':Msg,'layout':'top'};
+						noty(opt);
+					}
+				};
+			};
+		});
+	</script>
+</html>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.ntu.jtxy.core.dao.wx.PointRecordDao">
+
+	<resultMap id="RM" type="cn.edu.ntu.jtxy.core.model.wx.PointRecordDo">
+		<result property="id" column="id" />
+		<result property="pointAcId" column="point_ac_id" />
+		<result property="uid" column="uid" />
+		<result property="operType" column="oper_type" />
+		<result property="amout" column="amout" />
+		<result property="orderNo" column="order_no" />
+		<result property="memo" column="memo" />
+		<result property="createime" column="create_time" />
+	</resultMap>
+
+	<sql id="allColumns">
+		point_ac_id,
+		uid,
+		oper_type,
+		amout,
+		order_no,
+		memo,
+		create_time
+	</sql>
+
+	<insert id="add" parameterType="cn.edu.ntu.jtxy.core.model.wx.PointRecordDo"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into jt_point_record (
+		<include refid="allColumns"></include>
+		) values
+		(#{uid},
+		#{pointAcId},
+		#{operType},
+		#{amout},
+		#{orderNo},
+		#{memo},
+		getdate()
+		)
+	</insert>
+
+
+</mapper>

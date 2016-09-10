@@ -1,0 +1,19 @@
+ <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+ <html>
+ <head>
+ <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+ <link  rel="stylesheet" href='${link.contextPath}#springTheme("css")' type="text/css" />
+ <title>#springTheme("page.title")</title>
+ </head>
+ <body>
+ #springTheme("welcome.message")
+ <br/>
+#springUrl("/index.htm")
+ <br/>
+${link.contextPath}#springTheme("css")
+ <br/>
+##springThemeText("welcome.message","a")
+ <br/>
+##springThemeText("welcome.messagea","a")
+ </body>
+</html>

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />	
+		<meta name="keywords" content="健康吧云管理平台" />
+		<meta name="description" content="健康吧,创享智慧健康生活" />
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/emng-1.0.0.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/public.css"/>
+		
+		<!--theme-->
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}#springTheme('emng')"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}#springTheme('public')"/>
+		<title>编辑会员套餐</title>
+		<style type="text/css">
+			nav em{background-position: -480px 0;}
+			#validDateA,#validDateA select{width: 692px;}
+			.select-list{width: 270px; height: 200px; border: 1px solid #DEDEDE; overflow-y: scroll;}
+			.select-list li{height: 30px; line-height: 30px; border-bottom: 1px dotted #DEDEDE; cursor: pointer; justify-content: center; margin-bottom: 0;}
+			.switch-btn-area{margin: 10px 30px; width: 80px;}
+			.switch-btn-area button{margin-bottom: 10px; height: 30px; line-height: 30px;}
+			.tab li:nth-last-of-type(1){align-items: flex-start;}
+			.select-list .choosen{background-color: #2DC7C2; color: #FFFFFF;}
+			@media (min-width: 1000px) and (max-width: 1499px){
+		    	#validDateA,#validDateA select{width: 789px;}
+		    	.select-list{width: 320px;}
+            }
+            @media (min-width: 1500px) and (max-width:1600px){
+	            #validDateA,#validDateA select{width: 989px;}
+	            .select-list{width: 424px;}
+            }
+            @media (min-width: 1620px) and (max-width:1800px){
+	           #validDateA,#validDateA select{width: 1289px;}
+	           .select-list{width: 575px;}
+            }
+		</style>
+	</head>
+	<body>
+		<nav class="emng-flex">
+			<em></em>
+			<p>会员卡管理 -> 会员套餐<span> -> 编辑会员套餐</span></p>
+		</nav>
+		<div class="btn-area emng-flex">
+			<a href="${link.contextPath}/packageMng.htm" class="emng-btn btn-bg-blue">返回</a>
+			<button class="emng-btn btn-bg-blue" id="go-submit" type="button">保存</button>
+		</div>
+		<div class="tab">
+		 	<form id="vipComb" name="modifyPackageForm" method="post" action="${link.contextPath}/modifyPackage.htm">
+			 	<input type="hidden" name="id" value="$!{modifyPackageForm.id}" />
+			 	<input type="hidden" name="serviceIds" id="serveList" value="" />
+			 	<ul>
+				    <li>
+						<span><i class="must">*</i>套餐名称:</span>
+						<input type="text" name="packageName" id="packageName" maxlength="10" value="$!{modifyPackageForm.packageName}" placeholder="10个字之内  请勿输入空格等特殊字符"/>
+					    <label class="error"></label>
+				    </li>
+					<li>
+						<span><i class="must">*</i>套餐有效期:</span>
+						<a class="emng-select org" id="validDateA">
+							<strong class="emng-curselect"></strong>
+							<select onchange="change($(this))" id="timeType" name="timeType" class="loc">
+								<option value="12" #if(${modifyPackageForm.timeType} == "12") selected="selected" #end>12个月</option>
+				  				<option value="6" #if(${modifyPackageForm.timeType} == "6") selected="selected" #end>6个月</option>
+				  				<option value="3" #if(${modifyPackageForm.timeType} == "3") selected="selected" #end>3个月</option>
+				  				<option value="1" #if(${modifyPackageForm.timeType} == "1") selected="selected" #end>1个月</option>
+							</select>
+						</a>			   
+					</li>
+					<li>
+						<span><i class="must">*</i>积分:</span>
+						<input type="text" name="score" id="score" value="$!{modifyPackageForm.score}" placeholder="只能输入数字"/>
+					    <label class="error"></label>
+					</li>
+					<li>
+						<span><i class="must">*</i>服务列表:</span>
+						<div class="switch-wrap emng-flex">
+								<div class="select-list">
+									<ul id="list1">
+										#foreach($item in $serviceList)
+											<li data-value="$!{item.id}">$!{item.serviceName}</li>
+										#end
+									</ul>
+								</div>
+								<div class="switch-btn-area">
+									<button type="button" id="leftOne" class="emng-btn btn-bg-gray"> > </button>
+									<button type="button" id="leftAll" class="emng-btn btn-bg-gray"> >> </button>
+									<button type="button" id="rightOne" class="emng-btn btn-bg-gray"> < </button>
+									<button type="button" id="rightAll" class="emng-btn btn-bg-gray"> << </button>
+								</div>
+								<div class="select-list">
+									<ul id="list2">
+										#foreach($item in $currentList)
+											<li data-value="$!{item.id}">$!{item.serviceName}</li>
+										#end
+									</ul>
+								</div>
+			            </div>
+			            <label class="error" id="errList"></label>
+					</li>
+				</ul>
+		 	</form>
+		 	<label id="submitReturn" style="display: none;">$!{msg}</label>
+		</div>
+	</body>
+	<script src="${link.contextPath}/js/plugin/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${link.contextPath}/js/plugin/vertifycate.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${link.contextPath}/js/plugin/select-changes.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${link.contextPath}/js/plugin/noty.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+    	$(document).ready(function(){
+    			//全部转移
+				function moveAll(e1,e2){
+				    var eLi = e1.find('li');
+				    eLi.removeClass('choosen flag');
+				    eLi.appendTo(e2);
+				};
+		
+				//逐个转移
+				function moveOne(e1,e2){
+				    var eLi = e1.find('.choosen');
+				    eLi.removeClass('choosen flag');
+				    eLi.appendTo(e2);
+				};
+		
+				//添加被选类
+				$('.select-list li').click(function(){
+					if(!$(this).hasClass('flag')){
+						$(this).addClass('choosen flag');
+					}else{
+						$(this).removeClass('choosen flag');
+					}
+				});
+		
+				//点击按钮调用转移
+				$('#leftOne').click(function(){
+					  moveOne($('#list1'),$('#list2'));
+				});
+				$('#rightOne').click(function(){
+					  moveOne($('#list2'),$('#list1'));
+				});
+				$('#leftAll').click(function(){
+					 moveAll($('#list1'),$('#list2'));
+				});
+				$('#rightAll').click(function(){
+					 moveAll($('#list2'),$('#list1'));
+				});
+				$('#list1 li').dblclick(function(){
+					 moveOne($('#list1'),$('#list2'));
+				});
+				$('#list2 li').dblclick(function(){
+					 moveOne($('#list2'),$('#list1'));
+				});
+    			
+    			function giveOption(){
+					var str = '';
+					$('#list2').find('li').each(function(i,e){
+						str+=$(e).attr('data-value')+',';   
+					});
+					$('#serveList').val(str);
+	            };
+    			
+    			function checklist(obj,errContainer,errTips){   
+				    var option_size=obj.find('li').length;
+					if(option_size==0){
+						errContainer.html(errTips);
+						return false;
+					}else{
+					    errContainer.html('');
+						return true;
+					}
+                }
+    			
+    			$('#go-submit').click(function(){
+    				if(!$('#packageName').validator({errorTips:'请勿输入特殊字符',required:true,requiredMsg:'套餐名称不能为空',testType:'sPecial'})
+    				   ||!$('#score').validator({errorTips:'请输入数字',required:true,requiredMsg:'积分不能为空',testType:'onlyNum'})
+    				   ||!checklist($('#list2'),$('#errList'),'请选择服务')){
+    					return false;
+    				}else{
+    					giveOption();
+    					$('#vipComb').submit();
+    				}
+    			});
+    			
+    			$('#packageName').blur(function(){
+    				$(this).validator({errorTips:'请勿输入特殊字符',required:true,requiredMsg:'套餐名称不能为空',testType:'sPecial'});
+    			});
+    			$('#score').blur(function(){
+    				$(this).validator({errorTips:'请输入数字',required:true,requiredMsg:'积分不能为空',testType:'onlyNum'});
+    			});
+    			
+    			//回车提交
+    			$('#vipComb').enterSub($('#go-submit'));
+    			
+    			//刷新保持select选值不变
+    			$('.loc').each(function(i,e){
+    				change($(e));
+    			});
+    			
+    			window.onload = function(){
+    				var Msg = $('#submitReturn').html();
+    				if(Msg != ''){
+			        	var options={"text":Msg,"layout":"top"};
+					    noty(options);
+                    }
+    			}
+    	});
+    </script>
+</html>

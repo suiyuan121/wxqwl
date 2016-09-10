@@ -1,0 +1,7 @@
+#macro( _test )
+<tr><td>test macro</td></tr>
+#end
+
+#macro( showPageLable $_formName $_pageList )
+#parse( "common/pageLable.vm" )
+#end

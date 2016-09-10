@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.edu.ntu.jtxy.core.dao.wx.UserInfoDao">
+
+	<resultMap id="RM" type="cn.edu.ntu.jtxy.core.model.wx.UserInfoDo">
+		<result property="id" column="id" />
+		<result property="uid" column="uid" />
+		<result property="stuNo" column="stu_no" />
+		<result property="idNo" column="stu_no" />
+		<result property="openId" column="open_id" />
+		<result property="userType" column="user_type" />
+		<result property="nickName" column="nick_name" />
+		<result property="realName" column="real_name" />
+		<result property="pwdSalt" column="pwd_salt" />
+		<result property="pwdHash" column="pwd_hash" />
+		<result property="sex" column="sex" />
+		<result property="phone" column="phone" />
+		<result property="loc" column="loc" />
+		<result property="status" column="status" />
+		<result property="memo" column="memo" />
+		<result property="createTime" column="create_time" />
+		<result property="modifyTime" column="modify_time" />
+	</resultMap>
+
+	<sql id="allColumnsForInsert">
+		uid,
+		stu_no,
+		id_no,
+		open_id,
+		user_type,
+		nick_name,
+		real_name,
+		pwd_salt,
+		pwd_hash,
+		sex,
+		phone,
+		loc,
+		status,
+		memo,
+		create_time,
+		modify_time
+	</sql>
+
+	<sql id="allColumnsForSelect">
+		id,
+		uid,
+		stu_no,
+		id_no,
+		open_id,
+		user_type,
+		nick_name,
+		real_name,
+		pwd_salt,
+		pwd_hash,
+		sex,
+		phone,
+		loc,
+		status,
+		memo,
+		create_time,
+		modify_time
+	</sql>
+
+	<insert id="add" parameterType="cn.edu.ntu.jtxy.core.model.wx.UserInfoDo"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into jt_user_info (
+		<include refid="allColumnsForInsert"></include>
+		) values(
+		#{uid},
+		#{stuNo},
+		#{idNo},
+		#{openId},
+		#{userType},
+		#{nickName},
+		#{realName},
+		#{pwdSalt},
+		#{pwdHash},
+		#{sex},
+		#{phone},
+		#{loc},
+		#{status},
+		#{memo},
+		getdate(),
+		getdate()
+		)
+	</insert>
+	<insert id="getSeq" useGeneratedKeys="true" keyProperty="id">
+		insert
+		into jt_uid_seq (memo) values('a');
+	</insert>
+
+	<select id="getByCond" parameterType="java.util.HashMap"
+		resultMap="RM">
+		select
+		<include refid="allColumnsForSelect"></include>
+		from jt_user_info
+		where 1=1
+		<if test="stuNo!=null and stuNo!=''">
+			and stu_no=#{stuNo}
+		</if>
+		<if test="openId!=null and openId!=''">
+			and open_id=#{openId}
+		</if>
+		<if test="status!=null and status!=''">
+			and status=#{status}
+		</if>
+	</select>
+
+	<update id="unBindOpenId">
+	<![CDATA[ 
+		update jt_user_info
+		set
+		open_id=CONVERT(varchar(100), GETDATE(), 121)+'--unBind'
+	    , modify_time=getdate()
+	    ,status='U'
+		where
+		open_id=#{openId} 
+	]]>
+	</update>
+
+	<update id="updateOpenIdByUid" parameterType="java.util.HashMap">
+	<![CDATA[ 
+		update jt_user_info
+		set
+		open_id=#{openId},
+		modify_time=getdate()
+		where
+		uid=#{uid}
+	]]>
+	</update>
+
+</mapper>

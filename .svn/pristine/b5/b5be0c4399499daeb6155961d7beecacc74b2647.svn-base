@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />	
+		<meta name="keywords" content="健康吧云管理平台" />
+		<meta name="description" content="睿博健康吧,创享智慧健康生活" />
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/emng-1.0.0.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/public.css"/>
+		
+		<!--theme-->
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}#springTheme('emng')"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}#springTheme('public')"/>
+		<title>用户管理</title>
+		<style type="text/css">
+			nav em{background-position: -180px 0;}
+			.check-factor-wrapper .check-factor-2 .line-two .dk-2 li:nth-of-type(1){margin-left: 25px;}
+		    .check-factor-wrapper .check-factor-2 .line-two .dk-2 li .emng-select{margin-left: 10px;}
+		    .check-factor-wrapper .check-factor-2 li input[type=text]{width: 165px;}
+		    .emng-select select,.emng-select{width: 200px;}
+		    .emng-select .emng-curselect{width: 168px;}
+		</style>
+		<title>批量注册</title>
+		<style type="text/css">
+			nav em{background-position: -180px 0;}
+			#batchName{width: 560px;}
+		</style>
+	</head>
+	<body>
+		<nav class="emng-flex">
+			<em></em>
+			<p>用户管理 -> <span>批量注册</span></p>
+		</nav>
+		<div class="check-factor-wrapper">
+			<article>查找</article>
+			<form name="queryForm" id="queryForm" method="post" action="${link.contextPath}/userBatchAddMng.htm">
+				 <input type="hidden" id="currentPage" name="currentPage" #if(${queryForm}) value="$!{queryForm.currentPage}" #else value="1" #end />
+				 <div class="check-factor-1 emng-flex">
+					<ul class="emng-flex">
+						<li>
+							<span>批次名称:</span>
+							<input type="text" id="batchName" class="Trim" name="batchName" value="$!{queryForm.batchName}" maxlength="20" onchange="javascript:resetCurrentPage();"/>
+						</li>
+					</ul>
+					<div class="check-search-wrapper emng-flex">
+					    <button class="emng-btn btn-bg-blue" type="submit">查找</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="pagebtn-wrapper emng-flex">
+			<div class="btn-wrap emng-flex">
+				<a href="${link.contextPath}/batchAddUser.htm" class="emng-btn btn-bg-gray">批量导入</a>
+			</div>
+			<div class="page-wrap">
+				#showPageLable('queryForm' $pageList)
+			</div>
+		</div>
+		<div class="tab-wrapper">
+			<table class="emng-table">
+				<thead>
+					<tr>
+						<th>批次名</th>
+						<th>文件名</th>
+						<th>导入时间</th>
+						<th>导入成功数量</th>
+						<th>导入失败数量</th>
+						<th>状态</th>
+						<th>详情</th>
+					</tr>
+				</thead>
+				<tbody>
+					#foreach($item in $pageList.resultList)
+					<tr>
+						<td>$!{item.batchName}</td>
+						<td>$!{item.fileName}</td>
+						<td>$dateUtil.getNewFormatDateString($!{item.gmtCreate})</td>
+						<td>#if($!{item.status.code} == 'I') - #else $!{item.successNum} #end</td>
+						<td>#if($!{item.status.code} == 'I') - #else $!{item.failNum} #end</td>
+						<td>$!{item.status.desc}</td>
+						<td>
+							#if($!{item.status.code} == 'I' || $!{item.status.code} == 'UD')
+								<a href="${link.contextPath}/userBatchModify.htm?batchId=$!{item.id}" class="a-btn">查看详情</a>
+							#end
+						</td>
+					</tr>
+					#end
+				</tbody>
+		    </table>
+		</div>
+	</body>
+	<script src="${link.contextPath}/js/plugin/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${link.contextPath}/js/plugin/noty.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${link.contextPath}/js/plugin/select-changes.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${link.contextPath}/js/plugin/vertifycate.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${link.contextPath}/js/plugin/Widget.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${link.contextPath}/js/plugin/Window.js" type="text/javascript" charset="utf-8"></script>
+</html>

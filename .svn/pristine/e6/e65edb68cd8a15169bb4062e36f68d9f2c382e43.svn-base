@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />	
+		<meta name="keywords" content="健康吧云管理平台" />
+		<meta name="description" content="健康吧,创享智慧健康生活" />
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/reset.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/emng-1.0.0.css"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}/css/public.css"/>
+		
+		<!--theme-->
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}#springTheme('emng')"/>
+		<link rel="stylesheet" type="text/css" href="${link.contextPath}#springTheme('public')"/>
+		<title>编辑用户信息</title>
+		<style type="text/css">
+			nav em{background-position: -180px 0;}
+			.ajax-edit{position: absolute; right: -25px; top: 8px;}
+		</style>
+	</head>
+	<body>
+		<nav class="emng-flex">
+			<em></em>
+			<p>用户管理 -> 用户信息<span> ->编辑用户</span></p>
+		</nav>
+		<div class="btn-area emng-flex">
+			<a href="${link.contextPath}/userInfo.htm" class="emng-btn btn-bg-blue" id="go-back">返回</a>
+			<button class="emng-btn btn-bg-blue" id="supp-card" type="button">补卡</button>
+			<button class="emng-btn btn-bg-blue" id="go-submit" type="button">提交</button>
+		</div>
+		<div class="tab">
+			<form id="editForm" name="editForm" action="${link.contextPath}/userModify.htm" method="post">
+				<input type="hidden" id="uid" name="uid" value="$!{userInfoModifyForm.uid}"/>
+		  		<input type="hidden" name="orgId" value="$!{userInfoModifyForm.orgId}"/>
+				<ul>
+					<li>
+						<span>用户名:</span>
+						<input type="text" name="userName" id="userName" value="$!{userInfoModifyForm.userName}" class="readyonly" readonly="readonly" />
+					</li>
+					<li>
+						<span><i class="must">*</i>姓名:</span>
+						<input type="text" id="fullName" name="fullName" maxlength="32" value="$!{userInfoModifyForm.fullName}" placeholder="32个字之内   请勿输入空格等特殊字符"/>
+						<label class="error"></label>
+					</li>
+					<li>
+						<span>身份证号:</span>
+						<input type="text" id="idNo" name="idNo" value="$!{webViewUtil.hiddenID($!{userInfoModifyForm.idNo})}" class="readyonly" readonly="readonly"/>
+						<div class="ajax-edit"><a href="javascript:;" class="emng-editbtn" id="modifyIdno"></a></div>
+					</li>
+					<li>
+						<span>卡号:</span>
+						<input type="text" id="witonId" name="witonId" maxlength="32" value="$!{userInfoModifyForm.witonId}" class="readyonly" readonly="readonly"/>
+					</li>
+					<li>
+						<span>密码:</span>
+						<input type="password" name="password" id="password" maxlength="32" value="" placeholder="密码长度在6-32位之间"/>
+					    <label class="error"></label>
+					</li>
+					<li>
+						<span>确认密码:</span>
+						<input type="password" name="" id="password2" maxlength="32" value="" placeholder="密码长度在6-32位之间"/>
+						<label class="error"></label>
+					</li>
+					<li>
+						<span>手机号码:</span>
+						<input type="text" name="phoneNo" id="phoneNo" value="$!{userInfoModifyForm.phoneNo}" maxlength="11" class="readyonly" readonly="readonly"/>
+					    <div class="ajax-edit"><a href="javascript:;" class="emng-editbtn" id="modifyPhone"></a></div>
+					</li>
+					<li>
+						<span>电子邮箱:</span>
+						<input type="text" name="email" id="email" value="$!{userInfoModifyForm.email}" maxlength="32" class="readyonly" readonly="readonly"/>
+					    <div class="ajax-edit"><a href="javascript:;" class="emng-editbtn" id="modifyEmail"></a></div>
+					</li>
+					<li>
+						<span>有效:</span>
+						<label class="emng-checkbox-wrap">
+							<input type="checkbox" #if(${userInfoModifyForm.status}) checked="checked" #end class="emng-checkbox emng-checkbox-item" name="status" id="status" value="E" />
+							<b></b>
+						</label>
+					</li>
+				</ul>
+				<label id="submitReturn" style="display: none;">$!{msg}</label>
+			</form>
+		</div>
+	</body>
+	<script src="${link.contextPath}/js/plugin/jquery-2.1.0.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${link.contextPath}/js/plugin/vertifycate.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${link.contextPath}/js/plugin/noty.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${link.contextPath}/js/plugin/Widget.js" type="text/javascript" charset="utf-8"></script>
+	<script src="${link.contextPath}/js/plugin/Window.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">
+    	$(document).ready(function(){
+    		$('#go-submit').click(function(){
+    			if(!$('#fullName').validator({errorTips:'请勿输入特殊字符',required:true,requiredMsg:'姓名不能为空',testType:'sPecial'})
+    			   ||!$('#password').validator({errorTips:'密码不能有空格',minLength:6,minMsg:'密码长度在6-32位之间',testType:'noSpace'})
+    			   ||!$('#password2').validator({objEqual:$('#password'),equalMsg:'两次密码输入不一致'})){
+    				return false;
+    			}else{
+    				$('#editForm').submit();
+    			}
+    		});
+    		
+    		$('#editForm').enterSub($('#go-submit'));
+    		
+    		$('#fullName').blur(function(){
+    			$(this).validator({errorTips:'请勿输入特殊字符',required:true,requiredMsg:'姓名不能为空',testType:'sPecial'});
+    		});
+    		$('#password').blur(function(){
+    			$(this).validator({errorTips:'密码不能有空格',minLength:6,minMsg:'密码长度在6-32位之间',testType:'noSpace'});
+    		});
+    		$('#password2').blur(function(){
+    			$(this).validator({objEqual:$('#password'),equalMsg:'两次密码输入不一致'});
+    		});
+    		$('#password2').focus(function(){
+    			if($(this).val() != ''){
+    				$(this).validator({objEqual:$('#password'),equalMsg:'两次密码输入不一致'});
+    			}
+    		});
+    		
+    		$('#modifyPhone').click(function(){
+    			var Win = new Window().prompt({
+    				width:350,
+    				height:150,
+    				title:'请输入手机号',
+    				maxlength4PromptInput:11,
+    				testRules:function(v){
+    					var rexPhone = /^1[3,5,7,8]\d{9}$/;
+    					if(!rexPhone.test(v)){
+    						$('.labelError').html('请输入正确的手机号');
+    						return false;
+    					}else{
+    						return true;
+    					}
+    				},
+    				handler4PromptBtn:function(v){
+    					var 
+    					    options = null,
+    					    Uid = $("#uid").val();
+    					$.post('${link.contextPath}/userLogonInfoUpdate.json',{logonType:"PHONE",logonName:v,uid:Uid},function(data){
+    						var code = data.code,
+    						    msg = data.msg;
+    						    if(code == 'SUCCESS'){
+    						    	$('#phoneNo').val(v);
+    						    	options = {'text':'编辑成功','layout':'top'};
+    						    	noty(options);
+    						    }else{
+    						    	//alert(msg);
+    						    	if(msg == '登录名已被使用'){
+    						    		options = {'text':'该手机号已经存在','layout':'top'};
+    						    		noty(options);
+    						    	}else{
+    						    		options = {'text':msg,'layout':'top'};
+    						    		noty(options);
+    						    	}
+    						    }
+    					});
+    				}
+    			});
+    		});
+    		
+    		$('#modifyEmail').click(function(){
+    			var Win2 = new Window().prompt({
+    				width:350,
+    				height:150,
+    				title:'请输入邮箱',
+    				maxlength4PromptInput:32,
+    				testRules:function(v){
+    					var rexEmail = /^\w+@[a-z0-9]+(\.[a-z]+){1,3}$/;
+    					if(!rexEmail.test(v)){
+    						$('.labelError').html('请输入正确的邮箱');
+    						return false;
+    					}else{
+    						$('.labelError').html('');
+    						return true;
+    					}
+    				},
+    				handler4PromptBtn:function(v){
+    					var 
+    					   options = null,
+    					   Uid = $('#uid').val();
+    					$.post('${link.contextPath}/userLogonInfoUpdate.json',{logonType:"EMAIL",logonName:v,uid:Uid},function(data){
+    						var code = data.code,
+    						    msg = data.msg;
+    						    if(code == 'SUCCESS'){
+    						    	$('#email').val(v);
+    						    	options = {'text':'编辑成功','layout':'top'};
+    						    	noty(options);
+    						    }else{
+    						    	//alert(msg);
+    						    	if(msg == '登录名已被使用'){
+    						    		options = {'text':'该邮箱已存在','layout':'top'};
+    						    		noty(options);
+    						    	}else{
+    						    		options = {'text':msg,'layout':'top'};
+    						    		noty(options);
+    						    	}
+    						    }
+    					})
+    				}
+    			});
+    		});
+    		
+    		$('#modifyIdno').click(function(){
+    			var Win2 = new Window().prompt({
+    				width:350,
+    				height:150,
+    				title:'请输入身份证',
+    				maxlength4PromptInput:18,
+    				testRules:function(v){
+    					if(!testId($('.window_promptInput'))){
+    						$('.labelError').html('请输入正确的身份证');
+    						return false;
+    					}else{
+    						$('.labelError').html('');
+    						return true;
+    					};
+    					
+    					function testId(obj){
+					    	var idStr = '',
+					    	    id1 = '',
+					    	    id2 = '',
+								iYear = new Date().getFullYear();
+							if(!obj.validator({errorTips:'请输入正确的身份证号',required:true,requiredMsg:'身份证号不能为空',testType:'iD'})){
+								return false;
+							}else{
+								if(obj.val().length == 18){
+								    idStr = obj.val().substring(6,10);
+								    id1 = obj.val().substring(10,12);
+								    id2 = obj.val().substring(12,14);
+								    if(idStr>iYear || idStr<1900 || id1 == '00' || id2 == '00'){
+								    	return false;
+								    }
+								    return true;
+								}else{
+									id1 = obj.val().substring(8,10);
+									id2 = obj.val().substring(10,12);
+									if(id1 == '00' || id2 == '00'){
+								    	return false;
+									}
+									return true;
+								}
+									
+							}
+				        }
+    				},
+    				handler4PromptBtn:function(v){
+    					var 
+    					   options = null,
+    					   Uid = $('#uid').val();
+    					$.post('${link.contextPath}/userLogonInfoUpdate.json',{logonType:"ID_NO",logonName:v,uid:Uid},function(data){
+    						var code = data.code,
+    						    msg = data.msg;
+    						    if(code == 'SUCCESS'){
+    						    	$('#idNo').val(v.substr(0,v.length-8)+'********');
+    						    	options = {'text':'编辑成功','layout':'top'};
+    						    	noty(options);
+    						    }else{
+    						    	//alert(msg);
+    						    	if(msg == '登录名已被使用'){
+    						    		options = {'text':'该身份证已存在','layout':'top'};
+    						    		noty(options);
+    						    	}else{
+    						    		options = {'text':msg,'layout':'top'};
+    						    		noty(options);
+    						    	}
+    						    }
+    					})
+    				}
+    			});
+    		});
+    		
+    		//async:false表示同步
+    		$('#supp-card').click(function(){
+    			var Win3 = new Window().prompt({
+    				width:350,
+    				height:150,
+    				title:'请输入卡号',
+    				maxlength4PromptInput:32,
+    				testRules:function(v){
+    					var rexWitonCard = /^[A-Za-z0-9]+$/;
+    					if(!rexWitonCard.test(v)){
+    						$('.labelError').html('请输入正确的卡号');
+    						return false;
+    					}else{
+    						$('.labelError').html('');
+    						return true;
+    					}
+    				},
+    				handler4PromptBtn:function(v){
+    					var 
+    					  options = null,
+    					  Uid = $('#uid').val(),
+    					  status = '',
+    					  msg = '';
+    					  $.ajax({
+    					  	type:'get',
+    					  	dataType : 'json',
+    					  	url:'${link.contextPath}/supplementaryCard.json?uid='+Uid+'&newCarNumber='+v,
+    					  	async:false,
+    					  	success:function(data){
+    					  		 status = data.STATUS;
+			                     msg = data.MSG;
+    					  	}
+    					  });
+    					  if(status == 'SUCCESS'){
+    					  	 $('#witonId').val(v);
+    					  	 options = {'text':'补卡成功','layout':'top'};
+    					  	 noty(options);
+    					  }else{
+					  	     options = {'text':msg,'layout':'top'};
+					  	     noty(options);
+    					  }
+    				}
+    			});
+    		});
+    		
+    		window.onload = function(){
+    			var result = $('#submitReturn').html();
+    			if(result == 'SUCCESS'){
+    				var opt = {'text':'编辑成功','layout':'top'};
+    				noty(opt);
+    			}else if(result != '' && result != 'SUCCESS'){
+    				var opt = {'text':result,'layout':'top'};
+    				noty(opt);
+    			}
+    		}
+    	});
+    </script>
+</html>
