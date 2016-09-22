@@ -14,8 +14,8 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import cn.wxqwl.zj.core.model.UserInfo.UserTypeEnum;
-import cn.wxqwl.zj.core.model.UserInfoDo;
+import cn.wxqwl.zj.core.model.dos.UserInfoDo;
+import cn.wxqwl.zj.core.model.dto.UserInfo.UserTypeEnum;
 import cn.wxqwl.zj.core.model.enums.StatusEnum;
 import cn.wxqwl.zj.core.repository.UserInfoConvertor;
 import cn.wxqwl.zj.core.repository.UserInfoRepository;

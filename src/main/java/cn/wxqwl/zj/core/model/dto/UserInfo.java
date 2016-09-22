@@ -1,6 +1,8 @@
-package cn.wxqwl.zj.core.model;
+package cn.wxqwl.zj.core.model.dto;
 
 import org.apache.commons.lang.StringUtils;
+
+import cn.wxqwl.zj.core.model.BaseModel;
 
 public class UserInfo extends BaseModel {
 

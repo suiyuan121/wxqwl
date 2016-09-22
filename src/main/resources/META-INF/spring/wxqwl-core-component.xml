@@ -9,4 +9,5 @@
 	default-autowire="byName">
 
 	<bean id="userInfoComponent" class="cn.wxqwl.zj.core.component.impl.UserComponentImpl"></bean>
+	<bean id="qrcodeInfoComponent" class="cn.wxqwl.zj.core.component.impl.QrcodeInfoComponentImpl"></bean>
 </beans>

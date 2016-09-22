@@ -2,7 +2,7 @@ package cn.wxqwl.zj.core.dao;
 
 import java.util.List;
 
-import cn.wxqwl.zj.core.model.UserInfoDo;
+import cn.wxqwl.zj.core.model.dos.UserInfoDo;
 
 public interface UserInfoDao {
 

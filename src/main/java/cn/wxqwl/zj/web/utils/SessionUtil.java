@@ -3,7 +3,7 @@ package cn.wxqwl.zj.web.utils;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import cn.wxqwl.zj.core.model.UserInfo;
+import cn.wxqwl.zj.core.model.dto.UserInfo;
 import cn.wxqwl.zj.web.SystemConstants;
 import cn.wxqwl.zj.web.filter.OperationContex;
 

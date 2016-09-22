@@ -4,7 +4,7 @@
 	  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.wxqwl.zj.core.dao.ImageInfoDao">
 
-	<resultMap id="RM" type="cn.wxqwl.zj.core.model.ImageInfoDo">
+	<resultMap id="RM" type="cn.wxqwl.zj.core.model.dos.ImageInfoDo">
 		<result property="id" column="id" />
 		<result property="uid" column="uid" />
 		<result property="type" column="type" />
@@ -24,7 +24,7 @@
 		gmt_create
 	</sql>
 
-	<insert id="add" parameterType="cn.wxqwl.zj.core.model.ImageInfoDo">
+	<insert id="add" parameterType="cn.wxqwl.zj.core.model.dos.ImageInfoDo">
 		<selectKey keyProperty="id" resultType="int" order="BEFORE">
 			select
 			nextval('seq_image_info ')
@@ -41,6 +41,13 @@
 		now()
 		)
 	</insert>
+
+	<select id="getById" resultMap="RM">
+		select
+		<include refid="allColumns"></include>
+		from image_info
+		where id=#{id}
+	</select>
 
 
 

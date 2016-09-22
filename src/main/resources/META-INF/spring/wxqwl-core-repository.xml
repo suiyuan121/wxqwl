@@ -13,5 +13,10 @@
 	</bean>
 	<bean id="userInfoRepository" class="cn.wxqwl.zj.core.repository.impl.UserInfoRepositoryImpl">
 	</bean>
+	<bean id="labelRepository" class="cn.wxqwl.zj.core.repository.impl.LabelRepositoryImpl">
+	</bean>
+	<bean id="qrcodeInfoRepository"
+		class="cn.wxqwl.zj.core.repository.impl.QrcodeInfoRepositoryImpl">
+	</bean>
 
 </beans>

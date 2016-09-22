@@ -15,7 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 
-import cn.wxqwl.zj.core.model.UserInfo;
+import cn.wxqwl.zj.core.model.dto.UserInfo;
 import cn.wxqwl.zj.web.utils.SessionUtil;
 
 public class SessionFilter implements Filter {

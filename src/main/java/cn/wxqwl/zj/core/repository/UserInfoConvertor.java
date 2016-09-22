@@ -1,7 +1,7 @@
 package cn.wxqwl.zj.core.repository;
 
-import cn.wxqwl.zj.core.model.UserInfo;
-import cn.wxqwl.zj.core.model.UserInfoDo;
+import cn.wxqwl.zj.core.model.dos.UserInfoDo;
+import cn.wxqwl.zj.core.model.dto.UserInfo;
 
 /**
  * 

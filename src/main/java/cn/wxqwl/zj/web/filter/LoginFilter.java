@@ -22,7 +22,7 @@ import org.springframework.core.io.Resource;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import cn.wxqwl.zj.core.model.UserInfo;
+import cn.wxqwl.zj.core.model.dto.UserInfo;
 import cn.wxqwl.zj.web.SystemConstants;
 import cn.wxqwl.zj.web.utils.SessionUtil;
 

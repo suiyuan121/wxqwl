@@ -3,7 +3,7 @@ package cn.wxqwl.zj.web.filter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import cn.wxqwl.zj.core.model.UserInfo;
+import cn.wxqwl.zj.core.model.dto.UserInfo;
 
 /**
  * 

@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import cn.wxqwl.zj.core.dao.UserInfoDao;
-import cn.wxqwl.zj.core.model.UserInfoDo;
+import cn.wxqwl.zj.core.model.dos.UserInfoDo;
 
 public class UserInfoDaoImpl extends SqlSessionDaoSupport implements UserInfoDao {
 

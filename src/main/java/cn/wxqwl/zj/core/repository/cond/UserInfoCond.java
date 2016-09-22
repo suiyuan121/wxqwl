@@ -1,7 +1,7 @@
 package cn.wxqwl.zj.core.repository.cond;
 
 import cn.wxqwl.zj.core.model.BaseModel;
-import cn.wxqwl.zj.core.model.UserInfo.UserTypeEnum;
+import cn.wxqwl.zj.core.model.dto.UserInfo.UserTypeEnum;
 import cn.wxqwl.zj.core.model.enums.StatusEnum;
 
 public class UserInfoCond extends BaseModel {

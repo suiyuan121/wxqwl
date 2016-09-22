@@ -4,7 +4,7 @@
 	  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.wxqwl.zj.core.dao.UserInfoDao">
 
-	<resultMap id="RM" type="cn.wxqwl.zj.core.model.UserInfoDo">
+	<resultMap id="RM" type="cn.wxqwl.zj.core.model.dos.UserInfoDo">
 		<result property="uid" column="uid" />
 		<result property="userType" column="user_type" />
 		<result property="logonName" column="logon_name" />
@@ -35,7 +35,7 @@
 		gmt_modify
 	</sql>
 
-	<insert id="add" parameterType="cn.wxqwl.zj.core.model.UserInfoDo">
+	<insert id="add" parameterType="cn.wxqwl.zj.core.model.dos.UserInfoDo">
 		insert into user_info (
 		<include refid="allColumns"></include>
 		) values(

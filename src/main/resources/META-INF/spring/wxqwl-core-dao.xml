@@ -14,5 +14,9 @@
 	</bean>
 	<bean id="imageInfoDao" class="cn.wxqwl.zj.core.dao.impl.ImageInfoDaoImpl">
 	</bean>
+	<bean id="labelDao" class="cn.wxqwl.zj.core.dao.impl.LabelDaoImpl">
+	</bean>
+	<bean id="qrcodeInfoDao" class="cn.wxqwl.zj.core.dao.impl.QrcodeInfoDaoImpl">
+	</bean>
 
 </beans>

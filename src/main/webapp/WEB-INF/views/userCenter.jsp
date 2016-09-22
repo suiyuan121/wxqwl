@@ -114,10 +114,16 @@
 						<a href="http://www.91weixinqun.com/member/wechat">发布公众号</a>
 					</li>
 				</ul>
-				<h6>微商管理</h6>
+				<h6>已发布管理</h6>
 				<ul>
 					<li>
-						<a href="http://www.91weixinqun.com/vshang/openws">开通微商</a>
+						<a href="mywx.htm">我的微信</a>
+					</li>
+					<li>
+						<a href="mywxgroup.htm">我的微信群</a>
+					</li>
+					<li>
+						<a href="mywxgzh.htm">我的公众号</a>
 					</li>
 				</ul>
 				<h6>账号管理</h6>
@@ -150,7 +156,7 @@
 			</div>
 			<div class="right-content">
 				<div class="col-1 clearfix">
-					<iframe src="" name="myView" width="100%" height="400"></iframe>
+					<iframe src="" name="myView" width="100%" height="800"></iframe>
 				</div>
 			</div>
 		</div>

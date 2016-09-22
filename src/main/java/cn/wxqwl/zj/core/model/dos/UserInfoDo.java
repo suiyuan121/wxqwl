@@ -1,6 +1,8 @@
-package cn.wxqwl.zj.core.model;
+package cn.wxqwl.zj.core.model.dos;
 
 import java.util.Date;
+
+import cn.wxqwl.zj.core.model.BaseModel;
 
 public class UserInfoDo extends BaseModel {
 

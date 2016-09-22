@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import cn.wxqwl.zj.core.dao.UserInfoDao;
-import cn.wxqwl.zj.core.model.UserInfoDo;
+import cn.wxqwl.zj.core.model.dos.UserInfoDo;
 import cn.wxqwl.zj.core.repository.UserInfoRepository;
 import cn.wxqwl.zj.core.repository.cond.UserInfoCond;
 
@@ -25,7 +25,7 @@ public class UserInfoRepositoryImpl implements UserInfoRepository {
     private UserInfoDao userInfoDao;
 
     /** 
-     * @see cn.edu.ntu.jtxy.core.repository.wx.UserInfoRepository#add(cn.edu.ntu.jtxy.core.model.wx.UserInfoDo)
+     * @see cn.edu.ntu.jtxy.core.repository.wx.UserInfoRepository#add(cn.wxqwl.zj.core.model.dos.core.model.wx.UserInfoDo)
      */
     @Override
     public String add(UserInfoDo userInfoDo) {

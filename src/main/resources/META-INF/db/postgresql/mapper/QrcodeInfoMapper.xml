@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+	  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.wxqwl.zj.core.dao.QrcodeInfoDao">
+
+	<resultMap id="RM" type="cn.wxqwl.zj.core.model.dos.QrcodeInfoDo">
+		<result property="id" column="id" />
+		<result property="uid" column="uid" />
+		<result property="type" column="type" />
+		<result property="imageId" column="image_id" />
+		<result property="coverId" column="cover_id" />
+		<result property="wxAccount" column="wx_account" />
+		<result property="name" column="name" />
+		<result property="status" column="status" />
+		<result property="desc" column="descs" />
+		<result property="locId" column="loc_id" />
+		<result property="label" column="label" />
+		<result property="publicType" column="public_type" />
+		<result property="gmtCreate" column="gmt_create" />
+		<result property="gmtModify" column="gmt_modify" />
+	</resultMap>
+
+	<sql id="allColumns">
+		id,
+		uid,
+		type,
+		status,
+		image_id,
+		cover_id,
+		wx_account,
+		name,
+		descs,
+		loc_id,
+		label,
+		public_type,
+		gmt_create,
+		gmt_modify
+	</sql>
+
+	<insert id="add" parameterType="cn.wxqwl.zj.core.model.dos.QrcodeInfoDo">
+		<selectKey keyProperty="id" resultType="int" order="BEFORE">
+			select
+			nextval('seq_qrcode_info ')
+		</selectKey>
+		insert into qrcode_info (
+		<include refid="allColumns"></include>
+		) values(
+		#{id},
+		#{uid},
+		#{type},
+		#{status},
+		#{imageId},
+		#{coverId},
+		#{wxAccount},
+		#{name},
+		#{desc},
+		#{locId},
+		#{label},
+		#{publicType},
+		now(),
+		now()
+		)
+	</insert>
+
+
+	<select id="pageQueryCount" parameterType="java.util.Map"
+		resultType="int">
+		select count(*)
+		from
+		qrcode_info
+		where 1=1
+		<if test="uid!=null and uid!=''">
+			and uid =#{uid}
+		</if>
+		<if test="type!=null and type!=''">
+			and type =#{type}
+		</if>
+	</select>
+
+	<select id="pageQuery" parameterType="java.util.Map" resultMap="RM">
+		select
+		<include refid="allColumns"></include>
+		from qrcode_info
+		where 1=1
+		<if test="uid!=null and uid!=''">
+			and uid =#{uid}
+		</if>
+		<if test="type!=null and type!=''">
+			and type =#{type}
+		</if>
+		limit #{pageSize} offset #{offset}
+	</select>
+</mapper>
