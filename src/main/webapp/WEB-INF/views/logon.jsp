@@ -4,7 +4,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width">
-<title>注册 - 微信群分享 - 微信群|微信群二维码|微信群大全-最具人气的微信群导航</title>
+<title>注册 - 微信群网罗 - 微信群|微信群二维码|微信群大全-最具人气的微信群导航</title>
 <meta name="keywords"
 	content="微信群,微信群分享,微信群大全,微信群二维码,微信群推荐,微信群聊,微信加群,微信群人数上限,微信群怎么建,微信群怎么找">
 <meta name="description"
@@ -107,7 +107,6 @@
 
 					});
 </script>
-<script type="BAIDU_HH" runed="true">{"type":"flowbar","fixed_tpl":"2","di":"u2252074","rsi0":"auto","rsi1":"50","n":"1"}</script>
 <script src="js/share.js"></script>
 <link rel="stylesheet" href="css/slide_share.css">
 </head>
@@ -126,15 +125,13 @@
 	<div id="header_box">
 		<div id="header">
 			<h1 id="logo">
-				<a href="http://www.91weixinqun.com/">
-					<img src="images/xiaozhangprint.jpg" alt="微信群分享" width="100"
-						height="100">
+				<a href="http://www.ntujtxy.top">
+					<img src="images/logo.png" alt="微信群网罗">
 				</a>
 			</h1>
 			<div style="float: left; margin-top: 17px; margin-left: 50px;"></div>
 			<div class="search_top">
-				<form action="http://www.91weixinqun.com/group/index" method="post"
-					id="search_soft">
+				<form action="" method="post" id="search_soft">
 					<input type="text" name="keywd" value="搜索" id="search_txt">
 				</form>
 			</div>
@@ -142,35 +139,28 @@
 	</div>
 	<div id="nav_box">
 		<ul class="nav-site">
-			<li class="hot">
-				<a href="http://www.91weixinqun.com/">首页</a>
+			<li class="hot cur">
+				<a href="index.htm">首页</a>
 			</li>
 			<li class="hot">
-				<a href="http://www.91weixinqun.com/group/" title="微信群">微信群</a>
+				<a href="" title="微信群">微信群</a>
 			</li>
 			<li class="hot">
-				<a href="http://www.91weixinqun.com/wechat/" title="公众号">公众号</a>
-				<span class="new_ico8"> </span>
+				<a href="" title="公众号">公众号</a>
 			</li>
 			<li class="hot">
-				<a href="http://www.91weixinqun.com/news/zhangzishi/" title="涨姿势">涨姿势</a>
-				<span class="new_ico8">
-					<img src="images/new_ico.gif" alt="icon">
-				</span>
+				<a href="" title="微商群主">个人微信号</a>
 			</li>
 			<li class="hot">
-				<a href="http://www.91weixinqun.com/hongbao/" title="微信红包群">微信红包群</a>
+				<a href="" title="涨姿势">涨姿势</a>
+			</li>
+			<li class="hot">
+				<a href="" title="微信红包群">微信红包群</a>
 				<span class="new_ico12"></span>
 			</li>
 			<li class="hot">
-				<a href="http://www.91weixinqun.com/news/" title="微信学园">微信学园</a>
+				<a href="" title="微信学园">微信学园</a>
 				<span class="new_ico12"></span>
-			</li>
-			<li class="hot">
-				<a href="http://www.91weixinqun.com/goods/" title="货源">货源</a>
-			</li>
-			<li class="hot">
-				<a href="http://www.91weixinqun.com/weishang/" title="微商群主">微商群主</a>
 			</li>
 		</ul>
 		<div class="logininfo">
@@ -179,7 +169,7 @@
 					<a href="logon.htm">登录</a>
 				</li>
 				<li>
-					<a href="http://www.91weixinqun.com/member/register">注册</a>
+					<a href="register.htm">注册</a>
 				</li>
 			</ul>
 		</div>
@@ -194,7 +184,7 @@
 			</div>
 			<div class="position">
 				<span>当前位置：</span>
-				<a href="http://www.91weixinqun.com/">首页</a>
+				<a href="index.htm">首页</a>
 				&gt;
 				<a href="http://www.91weixinqun.com/member/register">群主注册</a>
 				&gt;
@@ -220,9 +210,8 @@
 								<label>验证码：</label>
 								<input type="text" id="verifyCode" name="verifyCode"
 									class="input-text">
-								<a href="vc.htm">
-									<img id="validateImg" src="vc.htm" width="100" height="30" />
-								</a>
+								<img id="validateImg" title="看不清楚，再换一张" src="vc.htm" width="100"
+									height="30" onClick="loadCheckCode();" alt="点击图片换一张" />
 							</div>
 							<div class="reg1">
 								<div class="submit">
@@ -237,7 +226,7 @@
 		</div>
 		<div id="main_right">
 			<div class="ad03">
-				<a href="www.baidu.com">
+				<a href="www.ntujtxy.top">
 					<img src="images/xiaozhangprint.jpg" alt="微信群分享" width="20"
 						height="20">
 				</a>
@@ -249,13 +238,13 @@
 					<h2 class="weichat_box_title">
 						微信学园
 						<strong>
-							<a href="http://www.91weixinqun.com/news">更多&gt;&gt;</a>
+							<a href="">更多&gt;&gt;</a>
 						</strong>
 					</h2>
 					<ul class="news_list">
 						<li>
 							<a target="_blank"
-								href="http://www.91weixinqun.com/news/5883.html">5种个人微信号加好友的方法</a>
+								href="">5种个人微信号加好友的方法</a>
 						</li>
 						<li>
 							<a target="_blank"
@@ -523,4 +512,10 @@
 		</div>
 	</div>
 </body>
+<script type="text/javascript">
+	function loadCheckCode() {
+		//看不清楚,再换一张
+		$('#validateImg').attr('src', './vc.htm?=' + Math.random());
+	}
+</script>
 </html>

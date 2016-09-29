@@ -30,6 +30,9 @@
 		<property name="maxUploadSize" value="10485760" />
 	</bean>
 
+
+	<!-- 在实际开发中通常都需配置 mvc:annotation-driven 标签 -->
+	<mvc:annotation-driven></mvc:annotation-driven>
 	<!-- 配置直接转发的页面 -->
 	<!-- 可以直接相应转发的页面, 而无需再经过 Handler 的方法. -->
 	<mvc:view-controller path="/success" view-name="success" />
@@ -40,8 +43,6 @@
 	<mvc:resources mapping="/images/**" location="/images/" />
 	<mvc:resources mapping="/upload/**" location="/upload/" />
 
-	<!-- 在实际开发中通常都需配置 mvc:annotation-driven 标签 -->
-	<mvc:annotation-driven></mvc:annotation-driven>
 
 	<bean
 		class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">

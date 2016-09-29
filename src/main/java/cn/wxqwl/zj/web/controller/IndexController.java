@@ -29,7 +29,6 @@ import cn.wxqwl.zj.util.SysFileUtils;
  * 
  */
 @Controller
-@RequestMapping(value = "index.htm")
 public class IndexController {
 	/**  */
 
@@ -45,7 +44,7 @@ public class IndexController {
 	private QrcodeInfoRepository qrcodeInfoRepository;
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(value = "index.htm", method = RequestMethod.GET)
 	public String doGet(ModelMap map, HttpServletRequest request) {
 		logger.info("测试   ");
 
@@ -105,4 +104,14 @@ public class IndexController {
 
 		return indexPage;
 	}
+
+	@RequestMapping(value = "/index")
+	public String index(HttpServletRequest request, ModelMap map) {
+		return doGet(map, request);
+	}
+
+	// @RequestMapping(value = "/")
+	// public String root(HttpServletRequest request, ModelMap map) {
+	// return doGet(map, request);
+	// }
 }

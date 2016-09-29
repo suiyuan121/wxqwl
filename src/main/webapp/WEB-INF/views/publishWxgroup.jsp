@@ -29,7 +29,7 @@
 		<h5 class="title">
 			我的微信群 /
 			<span>
-				<a target="_blank" href="http://www.91weixinqun.com/">微信群分享，</a>
+				<a target="_blank" href="http://www.ntujtxy.top">微信群分享，</a>
 				客服QQ：3093154044 2780270027 QQ群：165835750
 			</span>
 		</h5>

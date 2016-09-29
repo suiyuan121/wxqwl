@@ -89,6 +89,10 @@
 		<servlet-name>SpringDispatcher</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>SpringDispatcher</servlet-name>
+		<url-pattern>/index</url-pattern>
+	</servlet-mapping>
 
 	<!-- <servlet> -->
 	<!-- <servlet-name>WxServiceServlet</servlet-name> -->
@@ -99,6 +103,16 @@
 	<!-- <servlet-name>WxServiceServlet</servlet-name> -->
 	<!-- <url-pattern>/weixin.do</url-pattern> -->
 	<!-- </servlet-mapping> -->
+	<error-page>
+		<error-code>404</error-code>
+		<location>/WEB-INF/views/404.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/WEB-INF/views/error.jsp</location>
+	</error-page>
 
-
+	<welcome-file-list>
+		<welcome-file>index</welcome-file><!-- 必须 -->
+	</welcome-file-list>
 </web-app>

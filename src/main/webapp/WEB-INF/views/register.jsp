@@ -126,9 +126,8 @@
 	<div id="header_box">
 		<div id="header">
 			<h1 id="logo">
-				<a href="http://www.91weixinqun.com/">
-					<img src="images/xiaozhangprint.jpg" alt="微信群分享" width="100"
-						height="100">
+				<a href="http://www.ntujtxy.top">
+					<img src="images/logo.png" alt="微信群网罗">
 				</a>
 			</h1>
 			<div style="float: left; margin-top: 17px; margin-left: 50px;"></div>
@@ -142,36 +141,33 @@
 	</div>
 	<div id="nav_box">
 		<ul class="nav-site">
-			<li class="hot">
-				<a href="http://www.91weixinqun.com/">首页</a>
+			<li class="hot cur">
+				<a href="index.htm">首页</a>
 			</li>
 			<li class="hot">
-				<a href="http://www.91weixinqun.com/group/" title="微信群">微信群</a>
+				<a href="wxgroup.htm" title="微信群">微信群</a>
 			</li>
 			<li class="hot">
-				<a href="http://www.91weixinqun.com/wechat/" title="公众号">公众号</a>
-				<span class="new_ico8"> </span>
+				<a href="publicNum.htm" title="公众号">公众号</a>
 			</li>
 			<li class="hot">
-				<a href="http://www.91weixinqun.com/news/zhangzishi/" title="涨姿势">涨姿势</a>
-				<span class="new_ico8">
-					<img src="images/new_ico.gif" alt="icon">
-				</span>
+				<a href="wx.htm" title="微商群主">个人微信号</a>
 			</li>
 			<li class="hot">
-				<a href="http://www.91weixinqun.com/hongbao/" title="微信红包群">微信红包群</a>
+				<a href="" title="涨姿势">涨姿势</a>
+			</li>
+			<li class="hot">
+				<a href="" title="微信红包群">微信红包群</a>
 				<span class="new_ico12"></span>
 			</li>
 			<li class="hot">
-				<a href="http://www.91weixinqun.com/news/" title="微信学园">微信学园</a>
+				<a href="" title="微信学园">微信学园</a>
 				<span class="new_ico12"></span>
 			</li>
 			<li class="hot">
-				<a href="http://www.91weixinqun.com/goods/" title="货源">货源</a>
+				<a href="" title="货源">货源</a>
 			</li>
-			<li class="hot">
-				<a href="http://www.91weixinqun.com/weishang/" title="微商群主">微商群主</a>
-			</li>
+
 		</ul>
 		<div class="logininfo">
 			<ul>
@@ -179,7 +175,7 @@
 					<a href="logon.htm">登录</a>
 				</li>
 				<li>
-					<a href="http://www.91weixinqun.com/member/register">注册</a>
+					<a href="register.htm">注册</a>
 				</li>
 			</ul>
 		</div>
