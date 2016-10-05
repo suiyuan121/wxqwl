@@ -46,7 +46,7 @@ public class IndexController {
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping(value = "index.htm", method = RequestMethod.GET)
 	public String doGet(ModelMap map, HttpServletRequest request) {
-		logger.info("测试   ");
+		logger.info("首页   ");
 
 		// 取微信群
 		QrcodeInfoPageCond cond = new QrcodeInfoPageCond();

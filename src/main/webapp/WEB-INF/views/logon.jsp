@@ -11,6 +11,9 @@
 	content="最具人气的微信群导航,为大家提供各地区各兴趣的微信群二维码图片,大家可以根据需要找到自己感兴趣的微信群,我们的目标是做最好的微信群聊推荐网站。查看群二维码，提交群信息，让大家快速找到自己喜爱的微信群。">
 <link rel="stylesheet" type="text/css" href="css/layout.css">
 <link rel="stylesheet" type="text/css" href="css/table_form.css">
+<link rel="icon" href="images/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+
 <script src="js/jquery-1.9.1.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="js/simplefoucs.js"></script>
 <script type="text/javascript" src="js/jsAddress.js"></script>
@@ -19,101 +22,18 @@
 	charset="UTF-8"></script>
 <script src="js/formValidatorRegex.js" type="text/javascript"
 	charset="UTF-8"></script>
-<style></style>
-<script type="text/javascript">
-	$(document)
-			.ready(
-					function() {
-						$.formValidator.initConfig({
-							formID : "form1",
-							debug : false
-						});
+<style type="text/css">
+#validateImg {
+	width: 100px;
+	height: 38px;
+	vertical-align: middle;
+}
+</style>
 
-						$("#username").formValidator({
-							onShow : "请输入用户名(群主名)",
-							onFocus : "请输入用户名(群主名)",
-							onCorrect : "　",
-							defaultValue : ""
-						}).inputValidator({
-							min : 1,
-							onError : "用户名(群主名)为必填项"
-						});
-						$("#password").formValidator({
-							onShow : "请输入密码",
-							onFocus : "请输入密码",
-							onCorrect : "　",
-							defaultValue : ""
-						}).inputValidator({
-							min : 1,
-							onError : "密码为必填项"
-						});
-						$("#password2").formValidator({
-							onShow : "请再次输入密码",
-							onFocus : "请再次输入密码",
-							onCorrect : "　"
-						}).inputValidator({
-							min : 1,
-							onError : "重复密码不能为空,请确认"
-						}).compareValidator({
-							desID : "password",
-							operateor : "=",
-							onError : "2次密码不一致,请确认"
-						});
-
-						$("#wxnum").formValidator({
-							onShow : "请输入群主微信号",
-							onFocus : "请输入群主微信号",
-							onCorrect : "　",
-							defaultValue : ""
-						}).inputValidator({
-							min : 1,
-							onError : "群名称为必填项"
-						});
-						$("#email")
-								.formValidator({
-									onShow : "请输入邮箱",
-									onFocus : "请输入邮箱",
-									onCorrect : " "
-								})
-								.inputValidator({
-									min : 6,
-									max : 100,
-									onError : "你输入的邮箱长度非法,请确认"
-								})
-								.regexValidator(
-										{
-											regExp : "^([\w-.]+)@(([[0-9]{1,3}.[0-9]{1,3}.[0-9]{1,3}.)|(([\\w-]+.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(]?)$",
-											onError : "你输入的邮箱格式不正确"
-										});
-
-						$("#contents").formValidator({
-							onShow : "请输入群主介绍",
-							onFocus : "请输入群主介绍",
-							onCorrect : "　",
-							defaultValue : ""
-						}).inputValidator({
-							min : 1,
-							onError : "群主介绍为必填项"
-						});
-						$("#yzm").formValidator({
-							onShow : "请输入验证码",
-							onFocus : "请输入验证码",
-							onCorrect : "　",
-							defaultValue : ""
-						}).inputValidator({
-							min : 4,
-							onError : "请输入验证码"
-						});
-
-					});
-</script>
 <script src="js/share.js"></script>
 <link rel="stylesheet" href="css/slide_share.css">
 </head>
 <body>
-	<div id="BAIDU_DUP_fp_wrapper"
-		style="position: absolute; left: -1px; bottom: -1px; z-index: 0; width: 0px; height: 0px; overflow: hidden; visibility: hidden; display: none;">
-	</div>
 	<div class="top_link">
 		<div class="link_text">
 			<span>
@@ -133,6 +53,7 @@
 			<div class="search_top">
 				<form action="" method="post" id="search_soft">
 					<input type="text" name="keywd" value="搜索" id="search_txt">
+					<input type="image" src="images/search_btn.gif" id="search_btn">
 				</form>
 			</div>
 		</div>
@@ -186,7 +107,7 @@
 				<span>当前位置：</span>
 				<a href="index.htm">首页</a>
 				&gt;
-				<a href="http://www.91weixinqun.com/member/register">群主注册</a>
+				<a href="logon.htm">用户登录</a>
 				&gt;
 			</div>
 			<div class="newslist">
@@ -195,29 +116,31 @@
 						<form action="logon.htm" method="post"
 							enctype="multipart/form-data" autocomplete="off" name="form1">
 							<div class="input">
-								<label>用户名 </label>
+								<label>用户名： </label>
 								<input type="text" id="logonName" name="logonName" size="36"
 									class="input-text">
-								<div id="usernameTip" class="onShow">请输入用户名</div>
 							</div>
 							<div class="input">
 								<label>密码：</label>
 								<input type="password" id="password" name="password" size="36"
 									class="input-text">
-								<div id="passwordTip" class="onShow">请输入密码</div>
 							</div>
 							<div class="input">
 								<label>验证码：</label>
 								<input type="text" id="verifyCode" name="verifyCode"
 									class="input-text">
-								<img id="validateImg" title="看不清楚，再换一张" src="vc.htm" width="100"
-									height="30" onClick="loadCheckCode();" alt="点击图片换一张" />
+								<img id="validateImg" title="看不清楚，再换一张" src="vc.htm"
+									onClick="loadCheckCode();" alt="点击图片换一张" />
 							</div>
 							<div class="reg1">
 								<div class="submit">
-									<input type="submit" name="dosubmit" value="" class="add_btn">
+									<input type="submit" name="dosubmit" value="" class="add_btn"
+										id="toLogin">
 								</div>
 								<br>
+							</div>
+							<div id="errTips">
+								<label class="errorTips" id="errorTips">${errorTips}</label>
 							</div>
 						</form>
 					</div>
@@ -226,9 +149,8 @@
 		</div>
 		<div id="main_right">
 			<div class="ad03">
-				<a href="www.ntujtxy.top">
-					<img src="images/xiaozhangprint.jpg" alt="微信群分享" width="20"
-						height="20">
+				<a href="http://www.ntujtxy.top">
+					<img src="images/qrcode.jpg" alt="微信群网罗">
 				</a>
 			</div>
 			<div id="sider" style="margin-top: 10px;">
@@ -243,8 +165,7 @@
 					</h2>
 					<ul class="news_list">
 						<li>
-							<a target="_blank"
-								href="">5种个人微信号加好友的方法</a>
+							<a target="_blank" href="">5种个人微信号加好友的方法</a>
 						</li>
 						<li>
 							<a target="_blank"
@@ -321,7 +242,6 @@
 				</li>
 			</ul>
 		</div>
-		<style></style>
 		<div class="link mod">
 			<div class="top clearfix">
 				<div class="title">友情链接</div>
@@ -342,14 +262,8 @@
 			联系方式：Email：3093154044@qq.com 客服QQ：3093154044 2780270027 互动群:165835750
 			<br>
 			<br>
-
-			<script src="js/h.js" type="text/javascript"></script>
-			<a
-				href="http://tongji.baidu.com/hm-web/welcome/ico?s=60847fa52f4419e5909bd29f8ad71a1e"
-				target="_blank"> </a>
 		</div>
 	</div>
-	<style></style>
 	<div id="m-rightbar" style="display: none;">
 		<div class="m-menu">
 			<li class="m-toop">
@@ -368,151 +282,30 @@
 			</li>
 		</div>
 	</div>
-	<script type="text/javascript">
-		function goTopEx() {
-			var a = document.getElementById("m-rightbar");
-			window.onscroll = function() {
-				if (window.navigator.userAgent.indexOf("Chrome") >= 0) {
-					if (document.body.scrollTop > 300) {
-						a.style.display = ""
-					} else {
-						a.style.display = "none"
-					}
-				} else {
-					document.documentElement.scrollTop > 300 ? a.style.display = ""
-							: a.style.display = "none";
-				}
-			}
-		}
-		if (document.getElementById("m-rightbar")) {
-			document.getElementById("m-rightbar").style.display = "none"
-		}
-		goTopEx()
-	</script>
-	<script type="text/javascript">
-		jQuery(function() {
-			$('#top1').click(function() {
-				$('html,body').animate({
-					scrollTop : '0px'
-				}, 1000);
-				return false;
-			});
-			$('#footer1').click(function() {
-				$('html,body').animate({
-					scrollTop : document.body.clientHeight
-				}, 1000);
-				return false;
-			});
-		});
-	</script>
-	<script type="text/javascript">
-		/* 创建于 2015-08-07*/
-		var cpro_psid = "u2252074";
-	</script>
-	<script>
-		window._bd_share_config = {
-			"common" : {
-				"bdSnsKey" : {},
-				"bdText" : "",
-				"bdMini" : "2",
-				"bdMiniList" : false,
-				"bdPic" : "",
-				"bdStyle" : "0",
-				"bdSize" : "16"
-			},
-			"slide" : {
-				"type" : "slide",
-				"bdImg" : "1",
-				"bdPos" : "right",
-				"bdTop" : "100"
-			}
-		};
-		with (document)
-			0[(getElementsByTagName('head')[0] || body)
-					.appendChild(createElement('script')).src = 'http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='
-					+ ~(-new Date() / 36e5)];
-	</script>
-	<script>
-		QIHOO_UNION_F_SLOT = {
-			w : 500,
-			h : 48,
-			ls : "s2a8728378f",
-			position : 7,
-			display : 2,
-			origin : 0
-		};
-	</script>
-	<div id="QIHOO_UNION_F_PLACEHOLDER_147269814869949.61310984750249"
-		data-ls="s2a8728378f"
-		data-rurl="http://www.91weixinqun.com/member/register"
-		style="margin: 0px; padding: 0px; float: none; overflow: hidden; display: none; border: none; visibility: visible; cursor: pointer; box-sizing: content-box; z-index: 2147483646; width: 100%; height: 48px; position: fixed; left: 0px; bottom: 0px; background: none;">
-
-	</div>
-	<script>
-		(function() {
-			var s = "_" + Math.random().toString(36).slice(2);
-			document.write('<div id="' + s + '"></div>');
-			(window.slotbydup = window.slotbydup || []).push({
-				id : '1157256',
-				container : s,
-				size : '130,300',
-				display : 'float'
-			});
-		})();
-	</script>
-	<div id="_c8rc0b4nfdwp6x9rqpr1thuxr"
-		style="box-sizing: content-box; width: 130px; height: 317px; overflow: hidden; z-index: 2147483647; position: fixed; top: 200px; right: 34px;">
-
-		<div
-			style="box-sizing: content-box; height: 15px; border: 1px solid #e1e1e1; background: #f0f0f0; margin: 0; padding: 0; overflow: hidden;">
-		</div>
-	</div>
-	<script>
-		(function() {
-			var s = "_" + Math.random().toString(36).slice(2);
-			document.write('<div id="' + s + '"></div>');
-			(window.slotbydup = window.slotbydup || []).push({
-				id : '1157254',
-				container : s,
-				size : '130,300',
-				display : 'float'
-			});
-		})();
-	</script>
-	<div id="_0btvicav098w0atucipd7h9f6r"
-		style="box-sizing: content-box; width: 130px; height: 317px; overflow: hidden; z-index: 2147483647; position: fixed; top: 200px; left: 34px;">
-
-		<div
-			style="box-sizing: content-box; height: 15px; border: 1px solid #e1e1e1; background: #f0f0f0; margin: 0; padding: 0; overflow: hidden;">
-		</div>
-	</div>
-	<div id="BAIDU_DSPUI_FLOWBAR" fixed="true"
-		style="height: 50px; width: 100%; z-index: 2147483647; zoom: 1; overflow: visible; top: 0px; margin-top: -50px; left: 0px; right: auto; display: none;">
-
-		<div
-			style="position: absolute; opacity: 0.4; width: 40px; height: 20px; z-index: 111; bottom: -20px; right: 0px; background: rgb(0, 0, 0);"></div>
-		<div
-			style="position: absolute; width: 40px; height: 20px; line-height: 20px; cursor: pointer; text-align: center; color: rgb(255, 255, 255); font-size: 12px; z-index: 112; bottom: -20px; right: 0px;">关闭</div>
-	</div>
-	<div class="bdshare-slide-button-box bdshare-slide-style-r1"
-		style="top: 100px; width: 0px; z-index: 99999; right: 0px;"
-		data-bd-bind="1472698149131">
-		<a href="http://www.91weixinqun.com/member/register#"
-			onclick="return false;" class="bdshare-slide-button"
-			style="left: -24px;"></a>
-		<div class="bdshare-slide-list-box" style="width: 0px; display: none;">
-			<div class="bdshare-slide-top">分享到</div>
-			<div class="bdshare-slide-list">
-				<ul class="bdshare-slide-list-ul" style="width: 226px;"></ul>
-			</div>
-			<div class="bdshare-slide-bottom" style="width: 226px;">
-				<a href="http://www.91weixinqun.com/member/register#"
-					onclick="return false;" class="slide-more" data-cmd="more">更多...</a>
-			</div>
-		</div>
-	</div>
 </body>
+
 <script type="text/javascript">
+	$(document).ready(function() {
+		$("#toLogin").click(function() {
+			var logonName = $("#logonName").val();
+			var password = $("#password").val();
+			var verifyCode = $("#verifyCode").val();
+
+			if (logonName == "") {
+				$("#errorTips").html("用户名不能为空");
+				return false; // 
+			} else if (password == "") {
+				$("#errorTips").html("密码不能为空");
+				return false; // 
+			} else if (verifyCode == "") {
+				$("#errorTips").html("验证码不能为空");
+				return false; // 
+			} else {
+				return true; // 返回true ，a标签继续执行后续操作，跳转
+			}
+		});
+	});
+
 	function loadCheckCode() {
 		//看不清楚,再换一张
 		$('#validateImg').attr('src', './vc.htm?=' + Math.random());

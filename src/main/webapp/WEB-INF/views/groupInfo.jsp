@@ -23,6 +23,9 @@
 
 <script src="js/share.js"></script>
 <link rel="stylesheet" href="css/slide_share.css">
+<link rel="icon" href="images/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+
 </head>
 <body>
 	<div align="center">

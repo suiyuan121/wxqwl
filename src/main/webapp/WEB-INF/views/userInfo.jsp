@@ -11,6 +11,9 @@
 	content="最具人气的微信群导航,为大家提供各地区各兴趣的微信群二维码图片,大家可以根据需要找到自己感兴趣的微信群,我们的目标是做最好的微信群聊推荐网站。查看群二维码，提交群信息，让大家快速找到自己喜爱的微信群。">
 <link rel="stylesheet" type="text/css" href="css/layout.css">
 <link rel="stylesheet" type="text/css" href="css/table_form.css">
+<link rel="icon" href="images/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+
 <script src="js/jquery-1.9.1.min.js" type="text/javascript"></script>
 <script type="text/javascript" src="js/simplefoucs.js"></script>
 <script type="text/javascript" src="js/jsAddress.js"></script>

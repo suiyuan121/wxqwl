@@ -423,12 +423,11 @@ div#areaid {
 	margin: 0 5px 0 0;
 	padding: 2px 5px 2px;
 	border: 1px solid #d0d0d0;
-	background: #FFF url(../images/input.png) repeat-x;
 	position: relative;
 	top: -2px;
 	*top: 2px;
 }
-
+/* 	background: #FFF url(../images/input.png) repeat-x; */
 .picList li {
 	padding: 0 0 8px
 }
@@ -511,4 +510,13 @@ div#areaid {
 
 .common-form .tpl_style li.ac {
 	border: 1px solid #639DCF;
+}
+
+.errorTips {
+	color: red;
+	font-size: medium;
+	font-weight: bold;
+	display: inline-block;
+	padding: 11px 203px;
+	display: inline-block;
 }

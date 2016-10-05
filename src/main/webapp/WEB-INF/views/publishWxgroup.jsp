@@ -23,6 +23,9 @@
 <style></style>
 <script src="js/share.js"></script>
 <link rel="stylesheet" href="css/slide_share.css">
+<link rel="icon" href="images/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+
 </head>
 <body>
 	<div>
@@ -30,7 +33,7 @@
 			我的微信群 /
 			<span>
 				<a target="_blank" href="http://www.ntujtxy.top">微信群分享，</a>
-				客服QQ：3093154044 2780270027 QQ群：165835750
+				客服QQ：1581128024
 			</span>
 		</h5>
 		<div class="content login_box">
@@ -42,13 +45,11 @@
 						<label>群名称：</label>
 						<input type="text" id="qrcodeName" name="qrcodeName" size="36"
 							class="input-text">
-						<div id="qunnameTip" class="onShow">请输入群名称</div>
 					</div>
 					<div class="input">
 						<label>群主微信：</label>
 						<input type="text" id="ower" name="ower" size="36"
 							class="input-text">
-						<div id="qunzhuTip" class="onCorrect"></div>
 					</div>
 					<div class="input">
 						<label>分类：</label>
@@ -83,12 +84,14 @@
 					<div class="input">
 						<label>群介绍：</label>
 						<textarea name="desc" id="desc"></textarea>
-						<div id="contentsTip" class="onShow">请输入群介绍</div>
 					</div>
-					<div class="input" style="color: red; font-size: 14px;">
-						发布微信群 ：封面不可以是二维码，否则不予审核。二维码：请上传有效微信群二维码，
+					<div class="input" style="color: red; font-size: 14px;"
+						align="center">
+						发布微信群 ：封面不可以是二维码，否则不予审核。
 						<br>
-						以便快速通过审核。推广请联系客服QQ2780270027
+						二维码：请上传有效微信群二维码，以便快速通过审核。
+						<br>
+						推广请联系客服QQ1581128024
 					</div>
 					<div class="reg2">
 						<div class="submit">
@@ -98,7 +101,6 @@
 					</div>
 				</form>
 			</div>
-
 		</div>
 	</div>
 </body>

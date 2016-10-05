@@ -3,8 +3,12 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
+<link rel="icon" href="images/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
 <title>500</title>
+
 <style type="text/css">
 body {
 	margin: 0;
@@ -122,8 +126,8 @@ h2 em{color:#e4ebf8;}
 <body>
 	<h1></h1>
 	<p class="link">
-		<a href="index.htm">&#9666;返回首页</a> <a
-			href="javascript:history.go(-1);">&#9666;返回上一页</a>
+		<a href="index.htm">&#9666;返回首页</a>
+		<a href="javascript:history.go(-1);">&#9666;返回上一页</a>
 	</p>
 	<dl class="texts">
 		<dt>我们正在联系火星总部查找您所需要的页面.请返回等待信息..</dt>
