@@ -117,11 +117,11 @@
 						<a href="publishWxgroup.htm" target="myView">发布微信群</a>
 					</li>
 					<li>
-						<a href="http://www.91weixinqun.com/member/addqun">发布个人微信</a>
+						<a href="publishWxno.htm">发布个人微信</a>
 					</li>
 					<li>
 					<li>
-						<a href="http://www.91weixinqun.com/member/wechat">发布公众号</a>
+						<a href="publishWxpublic.htm">发布公众号</a>
 					</li>
 				</ul>
 				<h6>已发布管理</h6>
@@ -142,10 +142,10 @@
 						<a href="userInfo.htm" target="myView">个人信息</a>
 					</li>
 					<li>
-						<a href="http://www.91weixinqun.com/member/upmember">修改个人信息</a>
+						<a href="modifyUserinfo.htm">修改个人信息</a>
 					</li>
 					<li>
-						<a href="http://www.91weixinqun.com/member/upqcode">修改二维码</a>
+						<a href="">修改二维码</a>
 					</li>
 					<li>
 						<a href="http://www.91weixinqun.com/member/upfaceimg">修改头像</a>

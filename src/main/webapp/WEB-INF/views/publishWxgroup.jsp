@@ -53,7 +53,7 @@
 					</div>
 					<div class="input">
 						<label>分类：</label>
-						<select name="label">
+						<select name="label" id="label">
 							<c:forEach var="item" items="${labelList}">
 								<option value="${item.id}">${item.name}</option>
 							</c:forEach>
@@ -61,7 +61,7 @@
 					</div>
 					<div class="input">
 						<label>所属区域：</label>
-						<select id="Select1" name="loc">
+						<select id="loc" name="loc">
 							<option value="0">不限区域</option>
 						</select>
 					</div>
@@ -93,15 +93,57 @@
 						<br>
 						推广请联系客服QQ1581128024
 					</div>
-					<div class="reg2">
+					<div class="reg1">
 						<div class="submit">
-							<input type="submit" name="dosubmit" value="" class="add_btn">
+							<input type="submit" name="dosubmit" value="" class="add_btn"
+								style="width: 420px;" id="toLogin">
 						</div>
 						<br>
+						<div id="errTips">
+							<label class="errorTips" id="errorTips" style="width: 420px;">${errorTips}</label>
+						</div>
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
 </body>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#toLogin").click(function() {
+			var qrcodeName = $("#qrcodeName").val();
+			var ower = $("#ower").val();
+			var label = $("#label").val();
+			var loc = $("#loc").val();
+			var qcode = $("#qcode").val();
+			var cover = $("#cover").val();
+			var desc = $("#desc").val();
+
+			if (qrcodeName == "") {
+				$("#errorTips").html("群称不能为空");
+				return false; // 
+			} else if (ower == "") {
+				$("#errorTips").html("群主微信不能为空");
+				return false; // 
+			} else if (label == "") {
+				$("#errorTips").html("分类不能为空");
+				return false; // 
+			} else if (loc == "") {
+				$("#errorTips").html("区域不能为空");
+				return false; // 
+			} else if (qcode == "") {
+				$("#errorTips").html("二维码不能为空");
+				return false; // 
+			} else if (cover == "") {
+				$("#errorTips").html("封面不能为空");
+				return false; // 
+			} else if (desc == "") {
+				$("#errorTips").html("群介绍不能为空");
+				return false; // 
+			} else {
+				return true; // 返回true ，a标签继续执行后续操作，跳转
+			}
+		});
+	});
+</script>
 </html>
